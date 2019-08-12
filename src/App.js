@@ -18,6 +18,12 @@ import HotelReg from './component/supplier/HotelReg';
 import Profile from './component/supplier/Profile'
 import SRegister from './component/supplier/Register';
 
+//dashboard
+import Dashboard from './component/dashboard/Dashboard';
+import Bookings from './component/dashboard/Bookings';
+import Suppliers from './component/dashboard/Suppliers';
+import Customers from './component/dashboard/Customers';
+
 
 class App extends Component {
   
@@ -39,6 +45,12 @@ class App extends Component {
             <Route path="/supplier/hotelreg" component={HotelReg}/>
             <Route path="/supplier/Register" component={SRegister}/>
             <Route path="/supplier/profile" component={Profile} />
+
+            <Route path="/dashboard" exact component={Dashboard} />
+            <Route path="/dashboard/bookings" exact component={Bookings} />
+            <Route path="/dashboard/suppliers" exact component={Suppliers} />
+            <Route path="/dashboard/customers" exact component={Customers} />
+
           </div>
         </Router>
     );
