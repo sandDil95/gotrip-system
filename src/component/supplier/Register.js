@@ -2,6 +2,19 @@ import React , {Component} from 'react';
 import './css/Login.css';
 import {register} from './UserFunctions';
 import axios from 'axios';
+import validator from 'validator'
+
+const emailRegex = RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+//const telNum = RegExp(/^[0-9]*$/);
+const formValid = formErrors =>{
+    let valid = true;
+
+    Object.values(formErrors).forEach(val => {
+        val.length > 0 && (valid = false);
+    });
+    return valid;
+    
+}
 
 class Register extends Component{
     constructor(){
@@ -10,7 +23,13 @@ class Register extends Component{
             first_name:'',
             last_name:'',
             email:'',
-            password:''            
+            password:'' ,
+            formErrors:{
+                first_name:"",
+                last_name:"",
+                email:"",
+                password:""
+            }           
         }
         this.onChange = this.onChange.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
@@ -18,10 +37,53 @@ class Register extends Component{
     }
 
    onChange(e){
-       this.setState({[e.target.name]:e.target.value})
+    const {name , value} = e.target;
+    let formErrors = this.state.formErrors;
+    switch(name){
+     case'first_name':
+         formErrors.first_name = 
+             value.length < 3 
+                 ? "minimum 3 characaters required"
+                 :"";
+     break;
+     case'last_name':
+     formErrors.last_name = 
+         value.length < 3
+             ? "minimum 3 characaters required"
+             :"";
+     break;
+     case'email':
+         formErrors.email = 
+             emailRegex.test(value)
+                 ? ''
+                 :"Invalid Email Address";
+     break;
+     case'password':
+         formErrors.password = 
+             value.length < 6
+                 ? "minimum 6 characaters required"
+                 :"";
+     break;
+     default:
+     break;
+    }
+    this.setState({formErrors ,[name]:value},()=>console.log(this.state));
    }
    onSubmit(e){
         e.preventDefault();
+        if(formValid(this.state.formErrors)){
+            console.log(`
+                 --SUBMITING--
+                 first_name:${this.state.first_name},
+                 last_name:${this.state.last_name},
+                 email:${this.state.email},
+                 password:${this.state.password}
+            `)
+        }
+        
+        else{
+            console.error('Form Invalid - Display Error Masage');
+        }
         const obj = {
             first_name:this.state.first_name,
             last_name:this.state.last_name,
@@ -55,6 +117,7 @@ class Register extends Component{
 //    }
 
     render(){
+        const {formErrors} = this.state;
         return(
             <div className ="bg-img">
                 {/* <div className ="container"> */}
@@ -70,7 +133,11 @@ class Register extends Component{
                                         placeholder ="Enter First Name"
                                         value ={this.state.first_name}
                                         onChange ={this.onChange}
+                                        noValidate
                                 />
+                                {formErrors.first_name.length>0 && (
+                                    <span className="errorMessage">{formErrors.first_name}</span>
+                                )}
                             </div>
                             
                             <div className ="form-group">
@@ -80,8 +147,12 @@ class Register extends Component{
                                         placeholder ="Enter Last Name"
                                         value ={this.state.last_name}
                                         onChange ={this.onChange}
+                                        noValidate
                                 
                                 />
+                                {formErrors.last_name.length>0 && (
+                                    <span className="errorMessage">{formErrors.last_name}</span>
+                                )}
                             </div>
                             {/* <div className ="form-group">
                                 <label htmlFor = "address">Address</label>
@@ -101,8 +172,12 @@ class Register extends Component{
                                         placeholder ="Enter Email Address"
                                         value ={this.state.email}
                                         onChange ={this.onChange}
+                                        noValidate
                                 
                                 />
+                                 {formErrors.email.length>0 && (
+                                        <span className="errorMessage">{formErrors.email}</span>
+                                    )}
                             </div>
                             <div className ="form-group">
                                 <input type ="password"
@@ -111,8 +186,11 @@ class Register extends Component{
                                         placeholder ="Enter Password "
                                         value ={this.state.password}
                                         onChange ={this.onChange}
-                                
+                                        noValidate
                                 />
+                                {formErrors.password.length>0 && (
+                                            <span className="errorMessage">{formErrors.password}</span>
+                                        )}
                             </div>
                             {/* <div className ="form-group">
                                 <label htmlFor = "file">Profile Image</label>
