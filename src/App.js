@@ -10,6 +10,7 @@ import About from './component/customer/About';
 import Package from './component/customer/Package';
 import SupLogin from './component/supplier/Login';
 import SupRegister from './component/supplier/Register';
+
 import HLogin from './component/customer/HLogin';
 import HRegister from './component/customer/HRegister';
 import Login from './component/customer/Login';
@@ -56,6 +57,7 @@ class App extends Component {
             <Route path="/About-us" exact component={About}/>
             <Route path="/supplier-login" exact component={SupLogin}/>
             <Route path="/supplier-register" exact component={SupRegister}/>
+
             <Route path="/login" exact component={Login}/>
             <Route path="/register" exact component={Register}/>
             <Route path="/hlogin" exact component={HLogin}/>
@@ -72,6 +74,7 @@ class App extends Component {
             <Route path="/logged/Tailor-Made-Tour" exact component={LogTailor}/>
             <Route path="/logged/About-us" exact component={LogAbout}/>
             <Route path="/logged/hotel/hotelbooking" exact component={LogHotelBooking}/>
+
 
             <Route path="/supplier" exact component={SHome}/>
             <Route path="/supplier/vehiclereg" component={VehicleReg} />

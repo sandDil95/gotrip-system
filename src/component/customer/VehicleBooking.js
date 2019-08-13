@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+
 class HotelBooking extends Component {
     constructor(props){
         super(props);
@@ -105,6 +106,7 @@ class HotelBooking extends Component {
     render(){
         return(
             <div>
+
                 <div id="contentbodyy">
                     <div className="row">
                         <div className="col-sm-2"></div>
