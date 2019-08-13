@@ -36,7 +36,7 @@ const upload = multer({
 
 vehicleSearchRoutes.post('/add',upload.single('vehicleImage'),(req,res)=>{
    
-        
+        console.log(req.body.SID)
     
             if(req.body.onlyVehicle === "driver"){
                 const vehicleDetails = new Vehicle({
