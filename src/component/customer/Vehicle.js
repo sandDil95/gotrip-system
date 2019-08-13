@@ -66,73 +66,51 @@ class Vehicle extends Component {
     componentDidMount() {
         this.getDate();
     }
-    
-    onSubmit(e){
-        e.preventDefault();
-        console.log("hjnkjkn")
-        const searchDetails = {
-            city : this.state.city,
-            start : this.state.start,
-            end: this.state.end,
-            rooms: this.state.rooms,
-            travellers: this.state.travellers,
-            // hotels:[],
-        }
-        console.log(searchDetails);
-        this.componentDidMount();
-        // axios.post('http://localhost:4000/hotel/search/hotel-search',searchDetails)
-        //     .then(res => {
-        //         alert("Successfully Searching")
-        //         console.log(res);
-
-        //     })
-        //     .catch(err => { console.log(err) })
-    }
 
     onSubmit(e){ //search button click
         e.preventDefault();
         console.log("hjnkjkn");
-        if(this.state.picklocation === this.state.droplocation){
-            const searchDetails = {
-                picklocation : this.state.picklocation,
-                droplocation : this.state.picklocation,
-                from : this.state.from,
-                to : this.state.to,
-                size: this.state.size,
-            }
-            console.log(this.state.droplocation);
-            console.log(searchDetails);
-            this.vehicleBook();
-        }else{
+        // if(this.state.picklocation === this.state.droplocation){
+        //     const searchDetails = {
+        //         picklocation : this.state.picklocation,
+        //         droplocation : this.state.picklocation,
+        //         from : this.state.from,
+        //         to : this.state.to,
+        //         size: this.state.size,
+        //     }
+        //     console.log(this.state.droplocation);
+        //     console.log(searchDetails);
+        //     this.vehicleBook();
+        // }else{
             const searchDetails = {
                 picklocation : this.state.picklocation,
                 droplocation : this.state.droplocation,
-                from : this.state.from,
-                to : this.state.to,
+                from : this.state.start,
+                to : this.state.end,
                 size: this.state.size,
             }
             console.log(this.state.droplocation);
             console.log(searchDetails);
             this.vehicleBook();
-        }
+        // }
     }
 
     bookVehicle(e){ //click booking vehicle
         const val = e.target.value;
         console.log(val);
-        if(this.state.picklocation !== this.state.droplocation){
-            console.log("if")
+        // if(this.state.picklocation !== this.state.droplocation){
+        //     console.log("if")
+        //     this.props.history.push({
+        //         pathname: '/login',
+        //         state: { vehicleId:val, picklocation:this.state.picklocation, droplocation:this.state.picklocation, size:this.state.size, start:this.state.start, end:this.state.end }
+        //     })
+        // }else{
+            console.log("booking vehicle")
             this.props.history.push({
-                pathname: '/login',
-                state: { vehicleId:val, picklocation:this.state.picklocation, droplocation:this.state.picklocation, size:this.state.size, start:this.state.start, end:this.state.end }
-            })
-        }else{
-            console.log("else")
-            this.props.history.push({
-                pathname: '/login',
+                pathname: '/vlogin',
                 state: { vehicleId:val, picklocation:this.state.picklocation, droplocation:this.state.droplocation, start:this.state.start, end:this.state.end }
             })
-        }           
+        // }           
     }
     myFunction() {
         this.setState({
@@ -189,9 +167,9 @@ class Vehicle extends Component {
     }
 
   render() {
-    const content = this.state.checked ? <div className ="form-group">
-                                                    <input placeholder="Drop-off Location" className="form-control" name="droplocation" onChange={this.onChange} type="text" value={this.state.droplocation}/><br/>
-                                             </div> : null;
+    // const content = this.state.checked ? <div className ="form-group">
+    //                                                 <input placeholder="Drop-off Location" className="form-control" name="droplocation" onChange={this.onChange} type="text" value={this.state.droplocation}/><br/>
+    //                                          </div> : null;
     return (
         <div>
                 <header class="header">
@@ -273,9 +251,9 @@ class Vehicle extends Component {
                                                             <input placeholder="Pick-up Location" className="form-control" name="picklocation" onChange={this.onChange} type="text" value={this.state.picklocation}/>
                                                         </li>
                                                         <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
-                                                            <input type="checkbox" id="myCheck"  checked={this.state.checked} onChange={this.myFunction}/>Drop-off from different location
+                                                            <input placeholder="Drop-off Location" className="form-control" name="droplocation" onChange={this.onChange} type="text" value={this.state.droplocation}/><br/>
                                                         </li><br/>
-                                                        {content}
+                                                        {/* {content} */}
                                                         <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
                                                             <input type="date" className="form-control" name="start" onChange={this.onChange} value={this.state.start} min={this.state.current}/>
                                                         </li>
@@ -289,7 +267,8 @@ class Vehicle extends Component {
                                                             </select>                                                        
                                                         </li>
                                                     </ul>
-                                                    <button type="submit" class="search_button">search</button>                                                </div>
+                                                    <button type="submit" class="search_button">search</button>                                                
+                                                </div>
                                             </form>
                                         </div>
                                     </div>

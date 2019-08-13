@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended:false }))
 
 app.use('/uploads',express.static('uploads'));
 
-const mongoURI = 'mongodb://localhost:27017/goTrip'
+const mongoURI = 'mongodb+srv://sanduni:sand1234@cluster0-rygt6.mongodb.net/test?retryWrites=true'
 
 mongoose
     .connect(mongoURI , {useNewUrlParser:true})
@@ -28,6 +28,7 @@ var Customer = require('../backend/routes/Customer');
 var IndividualBookingRoutes = require('./routes/IndividualBooking');
 var hotelSearch = require('../backend/routes/HotelSearch');
 var vehicleSearch = require('../backend/routes/VehicleSearch');
+var tailorSearch = require('../backend/routes/TailorSearch');
 
 // Initialize CORS middleware
 app.use(function(req, res, next) {
@@ -41,6 +42,7 @@ app.use('/customer',Customer);
 app.use('/individual-booking',IndividualBookingRoutes);
 app.use('/hotel',hotelSearch);
 app.use('/vehicle',vehicleSearch);
+app.use('/tailor',tailorSearch);
 
 // app.use((req,res,next) =>{
 //     const error = new Error('Not Found');

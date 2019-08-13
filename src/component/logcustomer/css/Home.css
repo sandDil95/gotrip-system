@@ -1,0 +1,45 @@
+#content-bodyy{
+    position: relative;
+    text-align: center;
+    background:url('../../../assets/images/index.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    background-size: 100% 750px;
+}
+#contentbody{
+  background-color:whitesmoke;
+}
+#sideimg{
+    height:85%;
+    width: 85%;
+}
+#accocard{
+    color:black
+}
+
+#x{
+    height:40%;
+    width: 40%;
+}
+#jpg1{
+    background:url('../../../assets/images/menu.jpg');
+}
+#jpg2{
+    background:url('../../../assets/images/room_1.jpg')
+}
+#jpg3{
+    background:url('../../../assets/images/gallery_1.jpg')
+}
+#jpg4{
+    background:url('../../../assets/images/gallery_2.jpg')
+}
+#jpg5{
+    background:url('../../../assets/images/gallery_3.jpg')
+}
+#jpg6{
+    background:url('../../../assets/images/gallery_4.jpg')
+}
+#jpg7{
+    background:url('../../../assets/images/gallery_5.jpg')
+}

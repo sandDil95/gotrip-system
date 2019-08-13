@@ -25,10 +25,6 @@ class Tailor extends Component {
             start : '',
             end : '',
             rooms : '',
-            adults : '',
-            child:'',
-            picklocation : '',
-            droplocation : '',
             size : '',
             avatar : '',
             checked : false,
@@ -53,43 +49,35 @@ class Tailor extends Component {
             start : this.state.start,
             end: this.state.end,
             rooms: this.state.rooms,
-            adults: this.state.adults,
-            child: this.state.child,
+            size : this.state.size,
             // hotels:[],
         }
         console.log(searchDetails);
         this.componentDidMount();
-        // axios.post('http://localhost:4000/hotel/search/hotel-search',searchDetails)
-        //     .then(res => {
-        //         alert("Successfully Searching")
-        //         console.log(res);
-
-        //     })
-        //     .catch(err => { console.log(err) })
     }
     componentDidMount(){
         if(this.state.city===''){
             //if there are no details added
         }else{
             console.log(this.state.city); //remove
-            axios.get('http://localhost:4000/hotel/search/'+this.state.city)
+            axios.get('http://localhost:4000/tailor/search/'+this.state.city+"/"+this.state.start+"/"+this.state.end+"/"+this.state.rooms+"/"+this.state.size)
             .then(response => {
                 console.log("didmount")
-                let hotels = response.data.map((hotel) => {
+                let tailors = response.data.map((tailor) => {
                     console.log("response")
                     return (
-                            <div key={hotel.hotelName}>
+                            <div key={tailor.hotelName}>
                                 <div className="card d-block" id="hotelcard">
                                     <div class="row">
                                         <div className="col-lg-8">
                                             <div className="card d-block">
-                                                <img className="card-img-top" src={'http://localhost:4000/uploads/'+hotel.hotelImage} alt="Hotel Avatar: "/><br/>
+                                                <img className="card-img-top" src={'http://localhost:4000/uploads/'+tailor.hotelImage} alt="Hotel Avatar: "/><br/>
                                             </div>
                                         </div>
                                         <div className="col-lg-4">
                                             <div className="card-body" id="accocard">
-                                            <span> Hotel Name: <span>{hotel.hotelName}</span></span><br/>
-                                            <span> Location: <span>{hotel.place}</span></span><br/><br/><br/>
+                                            <span> Hotel Name: <span>{tailor.hotelName}</span></span><br/>
+                                            <span> Location: <span>{tailor.place}</span></span><br/><br/><br/>
                                             <button type ="submit" className="btn btn-primary">Book Now</button>
                                             <button type ="submit" className="btn btn-dark">Details</button>
                                             {/* <p class="card-text"></p> */}
@@ -100,8 +88,8 @@ class Tailor extends Component {
                             </div>
                     )
                 })
-                this.setState({ hotels : hotels });
-                console.log("state",hotels)
+                this.setState({ tailors : tailors });
+                console.log("state",tailors)
                 // this.setState({ booking:response.data })
             })
             .catch(function(error){
@@ -111,9 +99,9 @@ class Tailor extends Component {
         
     }
   render() {
-    const content = this.state.checked ? <div className ="form-group">
-                                            <input placeholder="Drop-off Location" className="form-control" name="droplocation" onChange={this.onChange} type="text" value={this.state.droplocation}/><br/>
-                                        </div> : null;
+    // const content = this.state.checked ? <div className ="form-group">
+    //                                         <input placeholder="Drop-off Location" className="form-control" name="droplocation" onChange={this.onChange} type="text" value={this.state.droplocation}/><br/>
+    //                                     </div> : null;
     return (
         <div>
                 <header class="header">
@@ -191,7 +179,7 @@ class Tailor extends Component {
                                     <div class="search_box_container d-flex flex-row align-items-center justify-content-start">
                                         <div class="search_form_container">
                                             <form id="accomadtn" className = "form-container" onSubmit={this.onSubmit}> 
-                                                {/* <div class="d-flex flex-lg-row flex-column align-items-center justify-content-start"> */}
+                                                <div class="d-flex flex-lg-row flex-column align-items-center justify-content-start">
                                                     <ul class="search_form_list d-flex flex-row align-items-center justify-content-start flex-wrap">
                                                         <li class="search_dropdown d-flex flex-row align-items-center ">
                                                             <input placeholder="Interested Place" className="form-control" name="city" onChange={this.onChange} type="text" value={this.state.city}/><br/>
@@ -202,7 +190,7 @@ class Tailor extends Component {
                                                         <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
                                                             <input placeholder="Check-out" className="form-control" name="end" onChange={this.onChange} type="date" value={this.state.end}/>
                                                         </li>
-                                                        <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
+                                                        {/* <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
                                                             <div class="row">
                                                                 <div class="col-lg-6">
                                                                     <input type="number " className="form-control" placeholder="Adults" name="adults" onChange={this.onChange} value={this.state.adults}/>
@@ -211,17 +199,24 @@ class Tailor extends Component {
                                                                     <input type="number " className="form-control" placeholder="Child" name="child" onChange={this.onChange} value={this.state.child}/>          
                                                                 </div>
                                                             </div>
-                                                        </li>
+                                                        </li> */}
                                                         <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
                                                             <input type="number" className="form-control" placeholder="Rooms" name="rooms" onChange={this.onChange} value={this.state.rooms}/>
                                                         </li>
-                                                    </ul><br/>
-                                                    <ul class="search_form_list d-flex flex-row align-items-center justify-content-start flex-wrap">
+                                                        <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
+                                                            <select name="size" onChange={this.onChange}>
+                                                                <option value="driver">Vehicle with Driver</option>
+                                                                <option value="nodriver">Vehicle Only</option>
+                                                            </select>                                                        
+                                                        </li>
+                                                    </ul>
+                                                    <button type="submit" class="search_button">search</button>
+                                                    {/* <ul class="search_form_list d-flex flex-row align-items-center justify-content-start flex-wrap">
                                                         <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
                                                             <input placeholder="Pick-up Location" className="form-control" name="picklocation" onChange={this.onChange} type="text" value={this.state.picklocation}/>
                                                         </li>
                                                         <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
-                                                            <input type="checkbox" id="myCheck"  checked={this.state.checked} onChange={this.myFunction}/>Drop-off from different location
+                                                            <input placeholder="Drop-off Location" className="form-control" name="droplocation" onChange={this.onChange} type="text" value={this.state.droplocation}/><br/>
                                                         </li><br/>
                                                         {content}
                                                         <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
@@ -231,9 +226,9 @@ class Tailor extends Component {
                                                             </select>                                                        
                                                         </li>
                                                         <button type="submit" class="search_button">search</button><br/>
-                                                    </ul>
+                                                    </ul> */}
                                                     
-                                                {/* </div> */}
+                                                </div>
                                             </form>
                                         </div>
                                     </div>

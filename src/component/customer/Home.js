@@ -16,6 +16,7 @@ import img7 from '../../assets/images/icon_3.svg';
 import img8 from '../../assets/images/placeholder.png';
 import img9 from '../../assets/images/smartphone.png';
 import img10 from '../../assets/images/mail.png';
+import bell from '../../assets/images/bell.png';
 
 class Home extends Component {
     constructor(props){
@@ -30,6 +31,11 @@ class Home extends Component {
         this.onChange = this.onChange.bind(this);
         this.handlePage = this.handlePage.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.bookHotel = this.bookHotel.bind(this);
+        this.login = this.login.bind(this);
+    }
+    login(){
+        this.props.history.push('/login')
     }
     handlePage(){
         this.props.history.push('/supplier-login')
@@ -37,7 +43,14 @@ class Home extends Component {
     onChange(e){
         this.setState({[e.target.name]:e.target.value})
     }
-    
+    bookHotel(e){ //click booking vehicle
+        const val = e.target.value;
+        console.log(val+"  val id");
+        this.props.history.push({
+            pathname: '/hlogin',
+            state: { hotelId:val, rooms:this.state.rooms, travellers:this.state.travellers, city:this.state.city, start:this.state.start, end:this.state.end }
+        })     
+    }
     onSubmit(e){
         e.preventDefault();
         console.log("hjnkjkn")
@@ -82,8 +95,7 @@ class Home extends Component {
                                             <div className="card-body" id="accocard">
                                             <span> Hotel Name: <span>{hotel.hotelName}</span></span><br/>
                                             <span> Location: <span>{hotel.place}</span></span><br/><br/><br/>
-                                            <button type ="submit" className="btn btn-primary">Book Now</button>
-                                            <button type ="submit" className="btn btn-dark">Details</button>
+                                            <button type ="submit" className="btn btn-primary" value={hotel._id} onClick={(e) => {this.bookHotel(e)}}>Book Now</button>
                                             {/* <p class="card-text"></p> */}
                                         </div>
                                         </div>
@@ -138,7 +150,15 @@ class Home extends Component {
                                         </ul>
                                     </nav>
                                     <div class="header_extra d-flex flex-row align-items-center justify-content-start ml-auto">
-                                        <div class="book_button trans_200">
+                                        {/* <Link to="/" className="nav-link">
+                                            <div class="logo">
+                                                <img className="imglogo" src={bell} alt=""/>
+                                            </div>
+                                        </Link> */}
+                                        <div class="phone d-flex flex-row align-items-center justify-content-start">
+                                            <a onClick={this.login}>Login</a>
+                                        </div>
+                                        <div class="phone d-flex flex-row align-items-center justify-content-start">
                                             <a onClick={this.handlePage}>Supplier</a>
                                         </div>
                                     </div>
