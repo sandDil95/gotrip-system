@@ -10,6 +10,10 @@ import About from './component/customer/About';
 import Package from './component/customer/Package';
 import SupLogin from './component/supplier/Login';
 import SupRegister from './component/supplier/Register';
+import CLogin from './component/customer/HLogin';
+import CRegister from './component/customer/VRegister';
+import HotelBooking from './component/customer/HotelBooking';
+
 
 //supplier
 import SHome from './component/supplier/Home';
@@ -39,6 +43,9 @@ class App extends Component {
             <Route path="/About-us" exact component={About}/>
             <Route path="/supplier-login" exact component={SupLogin}/>
             <Route path="/supplier-register" exact component={SupRegister}/>
+            <Route path="/login" exact component={CLogin}/>
+            <Route path="/register" exact component={CRegister}/>
+            <Route path="/hotel/hotelbooking" exact component={HotelBooking}/>
 
             <Route path="/supplier" exact component={SHome}/>
             <Route path="/supplier/vehiclereg" component={VehicleReg} />
