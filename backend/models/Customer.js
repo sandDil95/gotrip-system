@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
 
 let Customers = new Schema({
     // _id:mongoose.Schema.Types.ObjectId,
@@ -31,5 +32,14 @@ Customers.pre('save', function(next){
         });
     }); 
 });
+Customers.methods.generateJwt = function () {
+    return jwt.sign({
+        _id: this._id,  
+    }, 'ucsc@123',
+    {
+         expiresIn: '1d'
+    });
+
+}
 
 module.exports = mongoose.model('Customers',Customers);

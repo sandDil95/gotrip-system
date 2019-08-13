@@ -34,12 +34,10 @@ const upload = multer({
 
 hotelSearchRoutes.post('/add',upload.single('hotelImage'),(req,res)=>{
     console.log(req.body.hotelImage);
-    Supplier.find({email:req.body.email},function(err,result){ 
-        console.log(result); 
-        console.log(result[0]._id); 
-        if(result.length>=1){
+        
+       
             const hotelDetails = new Hotel({
-                sId: result[0]._id,
+                sId: req.body.SID,
                 hotelName: req.body.hotelName,
                 contactNo: req.body.contactNo,
                 address: req.body.address,
@@ -70,10 +68,8 @@ hotelSearchRoutes.post('/add',upload.single('hotelImage'),(req,res)=>{
                     error:err
                 })
             });
-        }else{
-            res.status(404).json({status: 'not found'});
-        }
-    })
+        
+    
 })
 
 hotelSearchRoutes.get('/search/:city',function(req,res,next){

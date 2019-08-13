@@ -76,8 +76,10 @@ class Login extends Component{
       };
       axios.post('http://localhost:4000/user/login/',obj)
           .then(res => {
+              console.log(res.data)
             //   alert(JSON.stringify(res))
                    if(res){
+                    localStorage.setItem('jwttoken',res.data.token)
                     this.props.history.push({
                         pathname: '/supplier',
                         state: { email:this.state.email }

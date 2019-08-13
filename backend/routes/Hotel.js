@@ -90,6 +90,7 @@ process.env.SECRET_KEY = 'secret'
 hotel.post('/hotelregister' ,(req , res)=>{
     const today = new Date()
     const userData = {
+        sid:req.body.SID,
         first_name:req.body.first_name,
         last_name:req.body.last_name,
         address:req.body.address,
@@ -104,6 +105,7 @@ hotel.post('/hotelregister' ,(req , res)=>{
         created:today
     }
 
+console.log(userData)
     HotelRegister.findOne({
         email:req.body.email
     })
@@ -116,7 +118,9 @@ hotel.post('/hotelregister' ,(req , res)=>{
                     res.json({status:user.email + 'registered!'})
                 })
                 .catch(err => {
-                    res.send('error :' + err)
+                    // res.send('error :' + err)
+                    console.log(err)
+
                 })
             })
         }
@@ -125,7 +129,7 @@ hotel.post('/hotelregister' ,(req , res)=>{
         }
     })
     .catch(err => {
-        res.send('error:' +err)
+       console.log(err)
     })
 })
 

@@ -64,7 +64,6 @@ users.post("/login",(req,res,next)=>{
                     });
                 }
                 if(result){
-                    console.log("s")
                     // const token = jwt.sign(//jwt authentication
                     //     {
                     //         email: user[0].email,
@@ -77,6 +76,7 @@ users.post("/login",(req,res,next)=>{
                     // );
                     return res.status(200).json({//valid login
                         message: "Successfully Logged",
+                        token:user[0].generateJwt()
                     })
                 }
                 res.status(401).json({//unauthorized login
@@ -182,12 +182,10 @@ users.post("/login",(req,res,next)=>{
 //         }
 //     })
 // })
-users.get('/supplier' ,(req , res)=>{
-    var decoded = jwt.verify(req.headers['authorization'] ,process.env.SECRET_KEY)
+users.get('/supplier/:id' ,(req , res)=>{
+   // var decoded = jwt.verify(req.headers['authorization'] ,process.env.SECRET_KEY)
 
-    User.findOne({
-        _id:decoded._id
-    })
+    User.findById(req.params.id)
     .then(user=>{
         if(user){
             res.json(user)
@@ -197,6 +195,18 @@ users.get('/supplier' ,(req , res)=>{
     })
     .catch(err=>{
         res.send('error: ' +err)
+    })
+})
+
+users.put('/updateprofile/:id',(req,res)=>{
+    User.findByIdAndUpdate(req.params.id,{$set:req.body},(err,doc)=>{
+        if(!err){
+            res.send(doc)
+        }
+        else{
+            console.log(err)
+            res.send(err)
+        }
     })
 })
 
