@@ -3,6 +3,23 @@ import {BrowserRouter as Router,Routes,Link} from "react-router-dom";
 import imglogo from '../../assets/logo.png';
 import Footer from '../customer/Footer'
 import axios from 'axios';
+import validator from 'validator'
+
+const validatePhoneNumber = number => {
+    const isValidPhoneNumber = validator.isMobilePhone(number)
+    return (isValidPhoneNumber)
+}
+const emailRegex = RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+//const telNum = RegExp(/^[0-9]*$/);
+const formValid = formErrors =>{
+    let valid = true;
+
+    Object.values(formErrors).forEach(val => {
+        val.length > 0 && (valid = false);
+    });
+    return valid;
+    
+}
 
 class VehicleReg extends Component{
     constructor(props){
@@ -19,6 +36,23 @@ class VehicleReg extends Component{
             locations : '',
             vehicleImage : '',
             // email : props.location.state.email,
+            formErrors:{
+                vehicleNo:"",
+                // beginingDate:"",
+                // endingDate:"",
+                // vehicleModel:"",
+                // supplier_name:"",
+                seatsNo:"",
+                // onlyVehicle:"",
+                ppkm:"",
+                vehicleModel:"",
+                locations:"",
+                vehicleImage:''
+            },
+            number:{
+                contactNo:""
+            }
+
         }
         this.onChange = this.onChange.bind(this)
         // this.onSubmit = this.onSubmit.bind(this)
@@ -31,7 +65,53 @@ class VehicleReg extends Component{
     }
 
    onChange(e){
-       this.setState({[e.target.name]:e.target.value})
+       const {name , value} = e.target;
+       let formErrors = this.state.formErrors;
+       let number = this.state.number;
+       switch(name){
+        case'vehicleNo':
+        formErrors.vehicleNo = 
+            value.length < 3 
+                ? "minimum 3 characaters required"
+                :"";
+        break;
+        case'contactNo':
+        number.contactNo = 
+            value.length <10 || value.length >10
+            ? "Invalid Phone Number"
+            :"";
+        break;
+        case'seatsNo':
+        formErrors.seatsNo = 
+            value.length > 2 
+                ? "Check again number of sheet"
+                :"";
+        break;
+        case'ppkm':
+        formErrors.ppkm = 
+            value > 300 
+                ? "less than 300  rupies"
+                :"";
+        break;
+        case'vehicleModel':
+        formErrors.vehicleModel = 
+            value.length < 3
+                ? "minimum 3 characaters required"
+                :"";
+        break;
+        case'locations':
+        formErrors.locations = 
+            value.length < 6 
+                ? "minimum 10 characaters required"
+                :"";
+        break;
+
+    default:
+    break;
+    }
+    this.setState({formErrors ,[name]:value},()=>console.log(this.state));
+    this.setState({number ,[name]:value} ,()=>console.log(this.state));
+
    }
 //    onSubmit(e){
 //        e.preventDefault()
@@ -57,6 +137,25 @@ class VehicleReg extends Component{
 //    }
    vehiRegister(e){
     e.preventDefault();
+    if(formValid(this.state.formErrors)|| validatePhoneNumber(this.state.number)){
+        console.log(`
+             --SUBMITING--
+             vehicleNo:${this.state.vehicleNo},
+             contactNo:${this.state.contactNo},
+             beginingDate:${this.state.beginingDate},
+             endingDate:${this.state.endingDate},
+             seatsNo:${this.state.seatsNo},
+             onlyVehicle:${this.state.onlyVehicle},
+             ppkm:${this.state.ppkm},
+             vehicleModel:${this.state.vehicleModel},
+             locations:${this.state.locations},
+             
+        `)
+    }
+    
+    else{
+        console.error('Form Invalid - Display Error Masage');
+    }
     const obj = {
         email: this.props.email,
         vehicleNo : this.state.vehicleNo,
@@ -86,6 +185,8 @@ class VehicleReg extends Component{
 
     render(){
         // const {something} = this.props;
+        const {formErrors} = this.state;
+        const {number} = this.state;
         return(
             <div>
                 <header class="header">
@@ -144,8 +245,11 @@ class VehicleReg extends Component{
                                             placeholder ="Enter first name"
                                             value ={this.state.vehicleNo}
                                             onChange ={this.onChange}
-                                    
+                                            noValidate
                                         />
+                                        {formErrors.vehicleNo.length>0 && (
+                                            <span className="errorMessage">{formErrors.vehicleNo}</span>
+                                        )}
                                     </div>
                                 
                                     <div className="col-lg-6">
@@ -155,7 +259,11 @@ class VehicleReg extends Component{
                                             placeholder ="Enter Contact Number"
                                             value ={this.state.contactNo}
                                             onChange ={this.onChange}
+                                            noValidate
                                         />
+                                        {number.contactNo.length>0 && (
+                                            <span className="errorMessage">{number.contactNo}</span>
+                                        )}
                                     </div>
                                 </div><br/>
                                 <div className="row">
@@ -223,12 +331,12 @@ class VehicleReg extends Component{
                                                 placeholder ="Enter Number of Seat"
                                                 value ={this.state.seatsNo}
                                                 onChange ={this.onChange}
-                                                //noValidate
+                                                noValidate
                                         
                                         />
-                                        {/* {formErrors.sheet_num.length>0 && (
-                                            <span className="errorMessage">{formErrors.sheet_num}</span>
-                                        )} */}
+                                        {formErrors.seatsNo.length>0 && (
+                                            <span className="errorMessage">{formErrors.seatsNo}</span>
+                                        )}
                                     </div>
                                     <div className="col-lg-6">
                                         {/* <label htmlFor = "pay_per_onekm">Pay per one km</label> */}
@@ -239,12 +347,12 @@ class VehicleReg extends Component{
                                                 placeholder ="Enter Pay per one km"
                                                 value ={this.state.ppkm}
                                                 onChange ={this.onChange}
-                                                //noValidate
+                                                noValidate
                                         
                                         />
-                                        {/* {formErrors.pay_per_onekm.length>0 && (
-                                            <span className="errorMessage">{formErrors.pay_per_onekm}</span>
-                                        )} */}
+                                        {formErrors.ppkm.length>0 && (
+                                            <span className="errorMessage">{formErrors.ppkm}</span>
+                                        )}
                                     </div>
                                     
                                 </div><br/>
@@ -258,12 +366,12 @@ class VehicleReg extends Component{
                                                 placeholder ="Enter Locations of vehicle"
                                                 value ={this.state.locations}
                                                 onChange ={this.onChange}
-                                                //noValidate
+                                                noValidate
                                         
                                         />
-                                        {/* {formErrors.location.length>0 && (
-                                            <span className="errorMessage">{formErrors.location}</span>
-                                        )} */}
+                                        {formErrors.locations.length>0 && (
+                                            <span className="errorMessage">{formErrors.locations}</span>
+                                        )}
                                     </div>
                                     <div className="col-lg-6">
                                         {/* <label htmlFor = "vehicle_model">Vehicle Model </label> */}
@@ -274,12 +382,12 @@ class VehicleReg extends Component{
                                                 placeholder ="Enter the vehicle model"
                                                 value ={this.state.vehicleModel}
                                                 onChange ={this.onChange}
-                                                //noValidate
+                                                noValidate
                                         
                                         />
-                                        {/* {formErrors.vehicle_model.length>0 && (
-                                            <span className="errorMessage">{formErrors.vehicle_model}</span>
-                                        )} */}
+                                        {formErrors.vehicleModel.length>0 && (
+                                            <span className="errorMessage">{formErrors.vehicleModel}</span>
+                                        )}
                                     </div>
                                     
                                 </div><br/>
@@ -295,12 +403,12 @@ class VehicleReg extends Component{
                                                 placeholder ="Choose Vehicle Photo"
                                                 value ={this.state.vehicleImage}
                                                 onChange ={this.onChange}
-                                                //noValidate
+                                                noValidate
                                         
                                         />
-                                        {/* {formErrors.vehicle_model.length>0 && (
-                                            <span className="errorMessage">{formErrors.vehicle_model}</span>
-                                        )} */}
+                                        {formErrors.vehicleImage.length>0 && (
+                                            <span className="errorMessage">{formErrors.vehicleImage}</span>
+                                        )}
                                     </div>
                                     
                                 </div><br/>
