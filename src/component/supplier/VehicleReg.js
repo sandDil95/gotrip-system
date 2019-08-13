@@ -283,6 +283,27 @@ class VehicleReg extends Component{
                                     </div>
                                     
                                 </div><br/>
+
+                                <div className ="row">
+                                    <label>Vehicle Image : </label>
+                                    <div className="col-lg-6">
+                                        {/* <label htmlFor = "vehicle_model">Vehicle Model </label> */}
+                                        <input type ="file"
+                                                className="form-control"
+                                                //className={formErrors.vehicle_model.length >0 ? "error" :null}
+                                                name = "vehicleImage"
+                                                placeholder ="Choose Vehicle Photo"
+                                                value ={this.state.vehicleImage}
+                                                onChange ={this.onChange}
+                                                //noValidate
+                                        
+                                        />
+                                        {/* {formErrors.vehicle_model.length>0 && (
+                                            <span className="errorMessage">{formErrors.vehicle_model}</span>
+                                        )} */}
+                                    </div>
+                                    
+                                </div><br/>
                                 {/* <button onClick = {this.fileUploadedHandler} type ="submit" className ="btn btn-primary btn--block">
                                         Register
                                 </button>
