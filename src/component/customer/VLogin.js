@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './css/login.css';
+import './css/Login.css';
 
 class VLogin extends Component {
     constructor(props){
@@ -35,7 +35,7 @@ class VLogin extends Component {
         .then(response=>{
             alert("Successfully logged")
             this.props.history.push({
-                pathname: '/Vehicle/vehiclebooking',
+                pathname: '/vehicle/vehiclebooking',
                 state: {
                     vehicleId:this.state.vehicleId,
                     picklocation:this.state.picklocation,
@@ -64,7 +64,7 @@ class VLogin extends Component {
         // this.state.vehicleId = this.props.location.state.vehicleId;
         console.log(this.state.vehicleId);
         this.props.history.push({
-            pathname: '/register',
+            pathname: '/vregister',
             state: {vehicleId:this.state.vehicleId}
         })
     }

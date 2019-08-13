@@ -4,7 +4,7 @@ import imglogo from '../../assets/logo.png';
 import './css/Header.css';
 // import Header from './Header';
 import Footer from './Footer';
-import './css/Home.css';
+import './css/Tailor.css';
 import axios from 'axios';
 // import img1 from '../../assets/images/room_1.jpg';
 import img2 from '../../assets/images/intro.jpg';
@@ -16,41 +16,36 @@ import img7 from '../../assets/images/icon_3.svg';
 import img8 from '../../assets/images/placeholder.png';
 import img9 from '../../assets/images/smartphone.png';
 import img10 from '../../assets/images/mail.png';
-import bell from '../../assets/images/bell.png';
 
-class Home extends Component {
+class Tailor extends Component {
     constructor(props){
         super(props);
         this.state = {
+            email : props.location.email,
             city : '',
             start : '',
             end : '',
             rooms : '',
-            travellers : ''
+            adults : '',
+            child:'',
+            picklocation : '',
+            droplocation : '',
+            size : '',
+            avatar : '',
+            checked : false,
         }
         this.onChange = this.onChange.bind(this);
-        this.handlePage = this.handlePage.bind(this);
+        this.logOut = this.logOut.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        this.bookHotel = this.bookHotel.bind(this);
-        this.login = this.login.bind(this);
+        
     }
-    login(){
-        this.props.history.push('/login')
-    }
-    handlePage(){
-        this.props.history.push('/supplier-login')
+    logOut(){
+        this.props.history.push('/')
     }
     onChange(e){
         this.setState({[e.target.name]:e.target.value})
     }
-    bookHotel(e){ //click booking vehicle
-        const val = e.target.value;
-        console.log(val+"  val id");
-        this.props.history.push({
-            pathname: '/hlogin',
-            state: { hotelId:val, rooms:this.state.rooms, travellers:this.state.travellers, city:this.state.city, start:this.state.start, end:this.state.end }
-        })     
-    }
+    
     onSubmit(e){
         e.preventDefault();
         console.log("hjnkjkn")
@@ -59,7 +54,8 @@ class Home extends Component {
             start : this.state.start,
             end: this.state.end,
             rooms: this.state.rooms,
-            travellers: this.state.travellers,
+            adults: this.state.adults,
+            child: this.state.child,
             // hotels:[],
         }
         console.log(searchDetails);
@@ -95,7 +91,8 @@ class Home extends Component {
                                             <div className="card-body" id="accocard">
                                             <span> Hotel Name: <span>{hotel.hotelName}</span></span><br/>
                                             <span> Location: <span>{hotel.place}</span></span><br/><br/><br/>
-                                            <button type ="submit" className="btn btn-primary" value={hotel._id} onClick={(e) => {this.bookHotel(e)}}>Book Now</button>
+                                            <button type ="submit" className="btn btn-primary">Book Now</button>
+                                            <button type ="submit" className="btn btn-dark">Details</button>
                                             {/* <p class="card-text"></p> */}
                                         </div>
                                         </div>
@@ -115,6 +112,9 @@ class Home extends Component {
         
     }
   render() {
+    const content = this.state.checked ? <div className ="form-group">
+                                            <input placeholder="Drop-off Location" className="form-control" name="droplocation" onChange={this.onChange} type="text" value={this.state.droplocation}/><br/>
+                                        </div> : null;
     return (
         <div>
                 <header class="header">
@@ -132,34 +132,26 @@ class Home extends Component {
 
                                     <nav class="main_nav">
                                         <ul class="d-flex flex-row align-items-center justify-content-start">
+                                            <li>
+                                                <Link to={{pathname:"/duplogged", email: this.state.email}} className="nav-link">Accomadations</Link>
+                                            </li>
+                                            <li>
+                                                <Link to={{pathname:"/logged/vehicle", email: this.state.email}} className="nav-link">Vehicles</Link>
+                                            </li>
+                                            <li>
+                                                <Link to={{pathname:"/logged/Travel-Packages", email: this.state.email}} className="nav-link">Travel-Packages</Link>
+                                            </li>
                                             <li className="nav-item active">
-                                                <Link to="/" className="nav-link">Accomadations</Link>
+                                                <Link to="/logged/Tailor-Made-Tour" className="nav-link">Tailor-Made Tour</Link>
                                             </li>
                                             <li>
-                                                <Link to="/vehicle" className="nav-link">Vehicles</Link>
-                                            </li>
-                                            <li>
-                                                <Link to="/Travel-Packages" className="nav-link">Travel-Packages</Link>
-                                            </li>
-                                            <li >
-                                                <Link to="/Tailor-Made-Tour" className="nav-link">Tailor-Made Tour</Link>
-                                            </li>
-                                            <li>
-                                                <Link to="/About-us" className="nav-link">About Us</Link>
+                                                <Link to={{pathname:"/logged/About-us", email: this.state.email}} className="nav-link">About Us</Link>
                                             </li>
                                         </ul>
                                     </nav>
                                     <div class="header_extra d-flex flex-row align-items-center justify-content-start ml-auto">
-                                        {/* <Link to="/" className="nav-link">
-                                            <div class="logo">
-                                                <img className="imglogo" src={bell} alt=""/>
-                                            </div>
-                                        </Link> */}
-                                        <div class="phone d-flex flex-row align-items-center justify-content-start">
-                                            <a onClick={this.login}>Login</a>
-                                        </div>
-                                        <div class="phone d-flex flex-row align-items-center justify-content-start">
-                                            <a onClick={this.handlePage}>Supplier</a>
+                                        <div class="book_button trans_200">
+                                            <a onClick={this.logOut}>Log Out</a>
                                         </div>
                                     </div>
                                     <div class="hamburger ml-auto"><i class="fa fa-bars" aria-hidden="true"></i></div>
@@ -172,7 +164,7 @@ class Home extends Component {
 
 
                 <div id="contentbody">
-                    <div id="content-bodyy" className="card">
+                    <div id="content-bodyy-tailor" className="card">
                     {/* Menu */}                        
                     <br/><br/><br/><br/><br/><br/><br/><br/>
                     <div class="home">
@@ -184,8 +176,8 @@ class Home extends Component {
                                 <div class="row">
                                     <div class="col">
                                         <div class="home_content text-center">
-                                            <div class="home_title"><h1>Luxury & Comfort</h1></div>
-                                            <div class="home_text">Find the perfect place to stay</div>
+                                            <div class="home_title"><h1>Enjoy As You Wish</h1></div>
+                                            <div class="home_text">You can prepare packages your own</div>
                                         </div>
                                     </div>
                                 </div>
@@ -200,10 +192,10 @@ class Home extends Component {
                                     <div class="search_box_container d-flex flex-row align-items-center justify-content-start">
                                         <div class="search_form_container">
                                             <form id="accomadtn" className = "form-container" onSubmit={this.onSubmit}> 
-                                                <div class="d-flex flex-lg-row flex-column align-items-center justify-content-start">
+                                                {/* <div class="d-flex flex-lg-row flex-column align-items-center justify-content-start"> */}
                                                     <ul class="search_form_list d-flex flex-row align-items-center justify-content-start flex-wrap">
-                                                        <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
-                                                            <input placeholder="City" className="form-control" name="city" onChange={this.onChange} type="text" value={this.state.city}/><br/>
+                                                        <li class="search_dropdown d-flex flex-row align-items-center ">
+                                                            <input placeholder="Interested Place" className="form-control" name="city" onChange={this.onChange} type="text" value={this.state.city}/><br/>
                                                         </li>
                                                         <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
                                                             <input placeholder="Check-in" className="form-control" name="start" onChange={this.onChange} type="date" value={this.state.start}/> 
@@ -212,14 +204,37 @@ class Home extends Component {
                                                             <input placeholder="Check-out" className="form-control" name="end" onChange={this.onChange} type="date" value={this.state.end}/>
                                                         </li>
                                                         <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
-                                                            <input type="number " className="form-control" placeholder="Travellers" name="travellers" onChange={this.onChange} value={this.state.travellers}/>
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <input type="number " className="form-control" placeholder="Adults" name="adults" onChange={this.onChange} value={this.state.adults}/>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <input type="number " className="form-control" placeholder="Child" name="child" onChange={this.onChange} value={this.state.child}/>          
+                                                                </div>
+                                                            </div>
                                                         </li>
                                                         <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
                                                             <input type="number" className="form-control" placeholder="Rooms" name="rooms" onChange={this.onChange} value={this.state.rooms}/>
                                                         </li>
+                                                    </ul><br/>
+                                                    <ul class="search_form_list d-flex flex-row align-items-center justify-content-start flex-wrap">
+                                                        <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
+                                                            <input placeholder="Pick-up Location" className="form-control" name="picklocation" onChange={this.onChange} type="text" value={this.state.picklocation}/>
+                                                        </li>
+                                                        <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
+                                                            <input type="checkbox" id="myCheck"  checked={this.state.checked} onChange={this.myFunction}/>Drop-off from different location
+                                                        </li><br/>
+                                                        {content}
+                                                        <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
+                                                            <select name="size" onChange={this.onChange}>
+                                                                <option value="driver">Vehicle with Driver</option>
+                                                                <option value="nodriver">Vehicle Only</option>
+                                                            </select>                                                        
+                                                        </li>
+                                                        <button type="submit" class="search_button">search</button><br/>
                                                     </ul>
-                                                    <button type="submit" class="search_button">search</button>
-                                                </div>
+                                                    
+                                                {/* </div> */}
                                             </form>
                                         </div>
                                     </div>
@@ -517,4 +532,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default Tailor;

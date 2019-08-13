@@ -29,6 +29,7 @@ class About extends Component {
     constructor(props){
         super(props);
         this.state = {
+            email : props.location.email,
             city : '',
             start : '',
             end : '',
@@ -36,15 +37,11 @@ class About extends Component {
             travellers : ''
         }
         this.onChange = this.onChange.bind(this);
-        this.handlePage = this.handlePage.bind(this);
+        this.logOut = this.logOut.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        this.login = this.login.bind(this);
     }
-    login(){
-        this.props.history.push('/login');
-    }
-    handlePage(){
-        this.props.history.push('/supplier-login')
+    logOut(){
+        this.props.history.push('/')
     }
     onChange(e){
         this.setState({[e.target.name]:e.target.value})
@@ -133,28 +130,25 @@ class About extends Component {
                                     <nav class="main_nav">
                                         <ul class="d-flex flex-row align-items-center justify-content-start">
                                             <li>
-                                                <Link to="/" className="nav-link">Accomadations</Link>
+                                                <Link to={{pathname:"/duplogged", email: this.state.email}} className="nav-link">Accomadations</Link>
                                             </li>
                                             <li>
-                                                <Link to="/vehicle" className="nav-link">Vehicles</Link>
+                                                <Link to={{pathname:"/logged/vehicle", email: this.state.email}} className="nav-link">Vehicles</Link>
                                             </li>
                                             <li>
-                                                <Link to="/Travel-Packages" className="nav-link">Travel-Packages</Link>
+                                                <Link to={{pathname:"/logged/Travel-Packages", email: this.state.email}} className="nav-link">Travel-Packages</Link>
                                             </li>
                                             <li >
-                                                <Link to="/Tailor-Made-Tour" className="nav-link">Tailor-Made Tour</Link>
+                                                <Link to={{pathname:"/logged/Tailor-Made-Tour", email: this.state.email}} className="nav-link">Tailor-Made Tour</Link>
                                             </li>
                                             <li className="nav-item active">
-                                                <Link to="/About-us" className="nav-link">About Us</Link>
+                                                <Link to="/logged/About-us" className="nav-link active">About Us</Link>
                                             </li>
                                         </ul>
                                     </nav>
                                     <div class="header_extra d-flex flex-row align-items-center justify-content-start ml-auto">
-                                        <div class="phone d-flex flex-row align-items-center justify-content-start">
-                                            <a onClick={this.login}>Login</a>
-                                        </div>
-                                        <div class="phone d-flex flex-row align-items-center justify-content-start">
-                                            <a onClick={this.handlePage}>Supplier</a>
+                                        <div class="book_button trans_200">
+                                            <a onClick={this.logOut}>Log Out</a>
                                         </div>
                                     </div>
                                     <div class="hamburger ml-auto"><i class="fa fa-bars" aria-hidden="true"></i></div>

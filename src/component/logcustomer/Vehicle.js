@@ -4,7 +4,7 @@ import imglogo from '../../assets/logo.png';
 import './css/Header.css';
 // import Header from './Header';
 import Footer from './Footer';
-import './css/Home.css';
+import './css/Vehicle.css';
 import axios from 'axios';
 // import img1 from '../../assets/images/room_1.jpg';
 import img2 from '../../assets/images/intro.jpg';
@@ -16,105 +16,167 @@ import img7 from '../../assets/images/icon_3.svg';
 import img8 from '../../assets/images/placeholder.png';
 import img9 from '../../assets/images/smartphone.png';
 import img10 from '../../assets/images/mail.png';
-import bell from '../../assets/images/bell.png';
 
-class Home extends Component {
+class Vehicle extends Component {
     constructor(props){
         super(props);
         this.state = {
-            city : '',
-            start : '',
-            end : '',
-            rooms : '',
-            travellers : ''
+            email:props.location.email,
+            picklocation : '',
+            droplocation : '',
+            size : '',
+            avatar : '',
+            checked : false,
+            start: new Date(),
+            end: new Date(),
+            vehicleId : '',
+            day: '',
+            month: '',
+            year: '',
+            current: '',
+            currentplus: '',
+            currentdate: new Date().toLocaleString()
         }
         this.onChange = this.onChange.bind(this);
         this.handlePage = this.handlePage.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        this.bookHotel = this.bookHotel.bind(this);
-        this.login = this.login.bind(this);
+        this.bookVehicle = this.bookVehicle.bind(this);
+        this.myFunction = this.myFunction.bind(this);
+        this.vehicleBook = this.vehicleBook.bind(this);
     }
-    login(){
-        this.props.history.push('/login')
+    getDate() {
+        const now = new Date();
+        
+        if(this.state.month<10){
+            // eslint-disable-next-line
+            this.state.current = now.getFullYear()+'-0'+(now.getMonth()+1)+"-"+now.getDate();
+            // eslint-disable-next-line
+            this.state.currentplus = now.getFullYear()+'-0'+(now.getMonth()+1)+"-"+(now.getDate()+1);
+        }else{
+            // eslint-disable-next-line
+            this.state.current = now.getFullYear()+'-'+(now.getMonth()+1)+"-"+now.getDate();
+            // eslint-disable-next-line
+            this.state.currentplus = now.getFullYear()+'-'+(now.getMonth()+1)+"-"+(now.getDate()+1);
+        }
+        console.log(this.state.current);
+    }
+
+    onChange(e){
+        this.setState({[e.target.name]:e.target.value})
+    }
+    componentDidMount() {
+        this.getDate();
+    }
+
+    onSubmit(e){ //search button click
+        e.preventDefault();
+        console.log("hjnkjkn");
+        // if(this.state.picklocation === this.state.droplocation){
+        //     const searchDetails = {
+        //         picklocation : this.state.picklocation,
+        //         droplocation : this.state.picklocation,
+        //         from : this.state.from,
+        //         to : this.state.to,
+        //         size: this.state.size,
+        //     }
+        //     console.log(this.state.droplocation);
+        //     console.log(searchDetails);
+        //     this.vehicleBook();
+        // }else{
+            const searchDetails = {
+                picklocation : this.state.picklocation,
+                droplocation : this.state.droplocation,
+                from : this.state.start,
+                to : this.state.end,
+                size: this.state.size,
+            }
+            console.log(this.state.droplocation);
+            console.log(searchDetails);
+            this.vehicleBook();
+        // }
+    }
+
+    bookVehicle(e){ //click booking vehicle
+        const val = e.target.value;
+        console.log(val);
+        // if(this.state.picklocation !== this.state.droplocation){
+        //     console.log("if")
+        //     this.props.history.push({
+        //         pathname: '/login',
+        //         state: { vehicleId:val, picklocation:this.state.picklocation, droplocation:this.state.picklocation, size:this.state.size, start:this.state.start, end:this.state.end }
+        //     })
+        // }else{
+            this.props.history.push({
+                pathname: '/logged/vehicle/vehiclebooking',
+                state: {
+                    vehicleId:this.state.vehicleId,
+                    picklocation:this.state.picklocation,
+                    droplocation:this.state.droplocation,
+                    email:this.state.email,
+                    start:this.state.start,
+                    end: this.state.end,
+                }
+            })
+        // }           
+    }
+    myFunction() {
+        this.setState({
+            checked: !this.state.checked
+        })
+    }
+
+    vehicleBook(){
+        console.log(this.state.size);
+        // axios.get('http://localhost:4000/vehicle/search/'+this.state.size+'/'+this.state.picklocation+'/'+this.state.start+'/'+this.state.end) //check vehicle only or vehicle with driver
+        axios.get('http://localhost:4000/vehicle/search/'+this.state.size+'/'+this.state.picklocation) //check vehicle only or vehicle with driver
+        .then(response => {
+            console.log("didmount")
+            let vehicles = response.data.map((vehicle) => {
+                // this.setState({vehicleId : vehicle._id}) //get selected vehicle id to send vehicle booking page
+                // console.log(this.state.vehicleId+"response");
+                return (
+                    <div key={vehicle._id}>
+                        <div className="card d-block" id="vehiclecard">
+                            <div class="row">
+                                <div className="col-lg-8">
+                                    <div className="card d-block">
+                                        <img className="card-img-top" src={'http://localhost:4000/uploads/'+vehicle.vehicleImage} alt="Vehicle Avatar: "/><br/>
+                                    </div>
+                                </div>
+                                <div className="col-lg-4">
+                                    <div className="card-body" id="detailsvehi">
+                                        <span> Vehicle Owner: <span>{vehicle.vehicleOwner}</span></span><br/>
+                                        <span> Vehicle Model: <span>{vehicle.vehicleModel}</span></span><br/>
+                                        <span> Location: <span>{vehicle.locations}</span></span><br/>
+                                        {/* <Link to="/customer/vehiclebooking"><button>Book Now</button></Link> */}
+                                        {/* <button type ="submit" className="btn btn-primary" onClick={(e) => {this.bookVehicle(e, vehicle._id)}}>Book Now</button> */}
+                                        <button className="btn btn-primary" value={vehicle._id} onClick={(e) => {this.bookVehicle(e)}}>Book Now</button>
+                                        {/* <p class="card-text"></p> */}
+                                    </div>
+                                </div>
+                            </div>
+                        </div><br/>
+                    </div>
+                )
+            },error=>{
+                alert("Not found")
+            })
+            this.setState({ vehicles : vehicles });
+            console.log("state",vehicles)
+            // this.setState({ booking:response.data })
+        })
+        .catch(function(error){
+            console.log("error");
+        })
     }
     handlePage(){
         this.props.history.push('/supplier-login')
     }
-    onChange(e){
-        this.setState({[e.target.name]:e.target.value})
-    }
-    bookHotel(e){ //click booking vehicle
-        const val = e.target.value;
-        console.log(val+"  val id");
-        this.props.history.push({
-            pathname: '/hlogin',
-            state: { hotelId:val, rooms:this.state.rooms, travellers:this.state.travellers, city:this.state.city, start:this.state.start, end:this.state.end }
-        })     
-    }
-    onSubmit(e){
-        e.preventDefault();
-        console.log("hjnkjkn")
-        const searchDetails = {
-            city : this.state.city,
-            start : this.state.start,
-            end: this.state.end,
-            rooms: this.state.rooms,
-            travellers: this.state.travellers,
-            // hotels:[],
-        }
-        console.log(searchDetails);
-        this.componentDidMount();
-        // axios.post('http://localhost:4000/hotel/search/hotel-search',searchDetails)
-        //     .then(res => {
-        //         alert("Successfully Searching")
-        //         console.log(res);
 
-        //     })
-        //     .catch(err => { console.log(err) })
-    }
-    componentDidMount(){
-        if(this.state.city===''){
-            //if there are no details added
-        }else{
-            console.log(this.state.city); //remove
-            axios.get('http://localhost:4000/hotel/search/'+this.state.city)
-            .then(response => {
-                console.log("didmount")
-                let hotels = response.data.map((hotel) => {
-                    console.log("response")
-                    return (
-                            <div key={hotel.hotelName}>
-                                <div className="card d-block" id="hotelcard">
-                                    <div class="row">
-                                        <div className="col-lg-8">
-                                            <div className="card d-block">
-                                                <img className="card-img-top" src={'http://localhost:4000/uploads/'+hotel.hotelImage} alt="Hotel Avatar: "/><br/>
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-4">
-                                            <div className="card-body" id="accocard">
-                                            <span> Hotel Name: <span>{hotel.hotelName}</span></span><br/>
-                                            <span> Location: <span>{hotel.place}</span></span><br/><br/><br/>
-                                            <button type ="submit" className="btn btn-primary" value={hotel._id} onClick={(e) => {this.bookHotel(e)}}>Book Now</button>
-                                            {/* <p class="card-text"></p> */}
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div><br/> 
-                            </div>
-                    )
-                })
-                this.setState({ hotels : hotels });
-                console.log("state",hotels)
-                // this.setState({ booking:response.data })
-            })
-            .catch(function(error){
-                console.log(error); //remove
-            })
-        }
-        
-    }
   render() {
+    // const content = this.state.checked ? <div className ="form-group">
+    //                                                 <input placeholder="Drop-off Location" className="form-control" name="droplocation" onChange={this.onChange} type="text" value={this.state.droplocation}/><br/>
+    //                                          </div> : null;
     return (
         <div>
                 <header class="header">
@@ -132,10 +194,10 @@ class Home extends Component {
 
                                     <nav class="main_nav">
                                         <ul class="d-flex flex-row align-items-center justify-content-start">
-                                            <li className="nav-item active">
+                                            <li>
                                                 <Link to="/" className="nav-link">Accomadations</Link>
                                             </li>
-                                            <li>
+                                            <li className="nav-item active">
                                                 <Link to="/vehicle" className="nav-link">Vehicles</Link>
                                             </li>
                                             <li>
@@ -150,15 +212,7 @@ class Home extends Component {
                                         </ul>
                                     </nav>
                                     <div class="header_extra d-flex flex-row align-items-center justify-content-start ml-auto">
-                                        {/* <Link to="/" className="nav-link">
-                                            <div class="logo">
-                                                <img className="imglogo" src={bell} alt=""/>
-                                            </div>
-                                        </Link> */}
-                                        <div class="phone d-flex flex-row align-items-center justify-content-start">
-                                            <a onClick={this.login}>Login</a>
-                                        </div>
-                                        <div class="phone d-flex flex-row align-items-center justify-content-start">
+                                        <div class="book_button trans_200">
                                             <a onClick={this.handlePage}>Supplier</a>
                                         </div>
                                     </div>
@@ -169,10 +223,8 @@ class Home extends Component {
                     </div>
                 </header>
 
-
-
                 <div id="contentbody">
-                    <div id="content-bodyy" className="card">
+                    <div id="content-bodyy-vehi" className="card">
                     {/* Menu */}                        
                     <br/><br/><br/><br/><br/><br/><br/><br/>
                     <div class="home">
@@ -185,7 +237,7 @@ class Home extends Component {
                                     <div class="col">
                                         <div class="home_content text-center">
                                             <div class="home_title"><h1>Luxury & Comfort</h1></div>
-                                            <div class="home_text">Find the perfect place to stay</div>
+                                            <div class="home_text">Find your ideal Vehicle to travel</div>
                                         </div>
                                     </div>
                                 </div>
@@ -203,22 +255,26 @@ class Home extends Component {
                                                 <div class="d-flex flex-lg-row flex-column align-items-center justify-content-start">
                                                     <ul class="search_form_list d-flex flex-row align-items-center justify-content-start flex-wrap">
                                                         <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
-                                                            <input placeholder="City" className="form-control" name="city" onChange={this.onChange} type="text" value={this.state.city}/><br/>
+                                                            <input placeholder="Pick-up Location" className="form-control" name="picklocation" onChange={this.onChange} type="text" value={this.state.picklocation}/>
                                                         </li>
                                                         <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
-                                                            <input placeholder="Check-in" className="form-control" name="start" onChange={this.onChange} type="date" value={this.state.start}/> 
+                                                            <input placeholder="Drop-off Location" className="form-control" name="droplocation" onChange={this.onChange} type="text" value={this.state.droplocation}/><br/>
+                                                        </li><br/>
+                                                        {/* {content} */}
+                                                        <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
+                                                            <input type="date" className="form-control" name="start" onChange={this.onChange} value={this.state.start} min={this.state.current}/>
                                                         </li>
                                                         <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
-                                                            <input placeholder="Check-out" className="form-control" name="end" onChange={this.onChange} type="date" value={this.state.end}/>
+                                                            <input type="date" className="form-control" name="end" onChange={this.onChange} value={this.state.end} min={this.state.currentplus}/>
                                                         </li>
                                                         <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
-                                                            <input type="number " className="form-control" placeholder="Travellers" name="travellers" onChange={this.onChange} value={this.state.travellers}/>
-                                                        </li>
-                                                        <li class="search_dropdown d-flex flex-row align-items-center justify-content-start">
-                                                            <input type="number" className="form-control" placeholder="Rooms" name="rooms" onChange={this.onChange} value={this.state.rooms}/>
+                                                            <select name="size" onChange={this.onChange}>
+                                                                <option value="driver">Vehicle with Driver</option>
+                                                                <option value="nodriver">Vehicle Only</option>
+                                                            </select>                                                        
                                                         </li>
                                                     </ul>
-                                                    <button type="submit" class="search_button">search</button>
+                                                    <button type="submit" class="search_button">search</button>                                                
                                                 </div>
                                             </form>
                                         </div>
@@ -233,11 +289,11 @@ class Home extends Component {
                             <div className="col-lg-2"></div>
                             <div className="col-lg-8">
                                 <br/><br/><br/><br/><br/>
-                                {this.state.hotels}
+                                {this.state.vehicles}
                             </div>
                             <div className="col-lg-2"></div>
                         </div>
-                    </div>
+                    </div><br/><br/>
                         
 
                     <div class="intro">
@@ -517,4 +573,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default Vehicle;

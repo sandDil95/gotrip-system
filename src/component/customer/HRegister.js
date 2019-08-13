@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './css/CustomerRegister.css';
+import './css/Register.css';
 
 class HRegister extends Component {
     constructor(props){
@@ -24,7 +24,7 @@ class HRegister extends Component {
         this.state.vehicleId = this.props.location.state.vehicleId;
         console.log(this.state.vehicleId);
         this.props.history.push({
-            pathname: '/login',
+            pathname: '/hlogin',
             state: {vehicleId:this.state.vehicleId}
         })
     }
@@ -44,7 +44,7 @@ class HRegister extends Component {
         .then(response=>{
             alert("Successfully registered")
             this.props.history.push({
-                pathname: '/login',
+                pathname: '/hlogin',
                 state: {vehicleId:this.state.vehicleId}
             })
         },error=>{

@@ -14,21 +14,6 @@ app.use(bodyParser.urlencoded({ extended:false }))
 //app.use('/uploads',express.static('uploads'));
 
 
-// const MongoClient = require(‘mongodb’).MongoClient;
-// const uri = "mongodb+srv://sanduni:<password>@cluster0-rygt6.mongodb.net/test?retryWrites=true";
-// const client = new MongoClient(uri, { useNewUrlParser: true });
-// client.connect(err => {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   client.close();
-// });
-
-// mongoose.connect('mongodb+srv://sanduni:sand1234@cluster0-rygt6.mongodb.net/test?retryWrites=true',{ useCreateIndex: true, useNewUrlParser: true, useFindAndModify: false })
-// const conn = mongoose.connection;
-// conn.on('connected',()=>{
-//     console.log('connected to mongodb');
-// })
-
 const mongoURI = 'mongodb+srv://sanduni:sand1234@cluster0-rygt6.mongodb.net/test?retryWrites=true'
 
 mongoose
@@ -76,6 +61,8 @@ var Customer = require('../backend/routes/Customer');
 var IndividualBookingRoutes = require('./routes/IndividualBooking');
 var hotelSearch = require('../backend/routes/HotelSearch');
 var vehicleSearch = require('../backend/routes/VehicleSearch');
+
+var tailorSearch = require('../backend/routes/TailorSearch');
 var NotifyEndTrip = require('../backend/routes/NotifyEndTrip');
 
 // Initialize CORS middleware
@@ -95,6 +82,7 @@ app.use('/customer',Customer);
 app.use('/individual-booking',IndividualBookingRoutes);
 app.use('/hotel',hotelSearch);
 app.use('/vehicle',vehicleSearch);
+app.use('/tailor',tailorSearch);
 //app.use('/sendNotify' ,NotifyEndTrip);
 
 app.get('/',function(req,res){

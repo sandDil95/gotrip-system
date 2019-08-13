@@ -1,9 +1,10 @@
 const express = require('express');
-const hotelSearchRoutes = express.Router();
+const tailorSearchRoutes = express.Router();
 var ObjectId = require('mongodb').ObjectID;
 const mailer = require('../routes/mailer');
 
 const Hotel = require('../models/Hotel');
+const Vehicle = require('../models/Vehicle');
 const Supplier = require('../models/User');
 const Customer = require('../models/Customer');
 const BookedHotels = require('../models/bookedHotels');
@@ -32,90 +33,84 @@ const upload = multer({
     fileFilter: fileFilter
 });
 
-hotelSearchRoutes.post('/add',upload.single('hotelImage'),(req,res)=>{
-    console.log(req.body.hotelImage);
-    Supplier.find({email:req.body.email},function(err,result){ 
-        console.log(result); 
-        console.log(result[0]._id); 
-        if(result.length>=1){
-            const hotelDetails = new Hotel({
-                sId: result[0]._id,
-                hotelName: req.body.hotelName,
-                contactNo: req.body.contactNo,
-                address: req.body.address,
-                place: req.body.place,
-                hotelType:req.body.hotelType,
-                single_room_num:req.body.single_room_num,
-                single_room_payment:req.body.single_room_payment,
-                double_room_num:req.body.double_room_num,
-                double_room_payment:req.body.double_room_payment,
-                triple_room_num:req.body.triple_room_num,
-                triple_room_payment:req.body.triple_room_payment,
-                quad_room_num:req.body.quad_room_num,
-                quad_room_payment:req.body.quad_room_payment,
-                hotelImage : '',
-                // hotelImage : name,
-                booking : false
-            })
-            hotelDetails.save()
-            .then(doc => {
-                console.log(doc);
-                res.status(201).json({
-                    message: 'Hotel Added' 
-                })
-            })
-            .catch(err => {
-                console.log(err);
-                res.status(500).json({
-                    error:err
-                })
-            });
-        }else{
-            res.status(404).json({status: 'not found'});
-        }
-    })
-})
-
-hotelSearchRoutes.get('/search/:city',function(req,res,next){
+tailorSearchRoutes.get('/search/:city/:start/:end/:rooms/:size',function(req,res,next){
+    console.log("fygjhk")
     var searchedcity = req.params.city;
-    console.log(searchedcity+"hgbj");
-    Hotel.find({place:searchedcity},function(err,result){ //search searching city hotel available or not
-        if(err){
-            console.log(err);
-            res.status(500).json({status: 'failure'});
-        }
-        if(result.length>=1){
-            console.log(result); 
-            res.status(200).json(result)
+    console.log(req.params.city+" :searchedcity");
+    Hotel.find({place:searchedcity},function(err,htl){ //search searching city hotel available or not
+        var vStatus = req.params.size;
+        console.log(vStatus);
+        //vehicle only variable declaration
+        if(vStatus==='driver'){
+            var oVehicle=false;
+            console.log(oVehicle);
         }else{
-            res.status(404).json({status: 'not found'});
+            var oVehicle=true;
+            console.log(oVehicle);
         }
-    })
-})
-
-hotelSearchRoutes.get('/hotelbooking/:id/:email',(req,res)=>{
-    var id = req.params.id;
-    var email = req.params.email;
-    console.log("ID: "+id);
-    console.log("Email: "+email);
-    Hotel.find({"_id":new ObjectId(id)},function(err,vehi){ //get selected vehicle details for booking
-        Customer.find({email:email},function(err,custmr){
-            var result = vehi.concat(custmr);
+        Vehicle.find({onlyVehicle:oVehicle,booking:false,locations:searchedcity},function(err,vehi){
+            var result = vehi.concat(htl);
             if(err){
                 console.log(err);
-                res.status(500).json({status:'failure'});
+                res.status(500).json({status: 'failure'});
             }
+            var count=0;
             if(result.length>=1){
-                console.log(result);
-                res.status(202).json(result);
+                console.log(result); 
+                res.status(200).json(result);
+                console.log(result.length);
+                for(var i = 0; i < result.length;i++){
+                    if(result[i].vehicleNo){
+                        count++;
+                    }
+                }
+                var vehicleCount = count;
+                var arry = [];
+                console.log(vehicleCount);
+                var element = {};
+                for(var i = 0; i < vehicleCount;i++){
+                    for(var j = vehicleCount; j < result.length;j++){
+                        var obj1 = result[i];
+                        var obj2 = result[j];
+                        var element = Object.assign(obj1, obj2);
+                        console.log(element);
+                        arry.concat(element);
+                        console.log(arry);
+                    }
+                }
+                console.log("arry");
+                console.log(arry);
             }else{
-                res.status(404).json({status:'Not Found'})
+                console.log("gfh")
+                res.status(404).json({status: 'not found'});
             }
         })
     })
 })
 
-hotelSearchRoutes.post('/reserved',(req,res)=>{
+// tailorSearchRoutes.get('/hotelbooking/:id/:email',(req,res)=>{
+//     var id = req.params.id;
+//     var email = req.params.email;
+//     console.log("ID: "+id);
+//     console.log("Email: "+email);
+//     Hotel.find({"_id":new ObjectId(id)},function(err,vehi){ //get selected vehicle details for booking
+//         Customer.find({email:email},function(err,custmr){
+//             var result = vehi.concat(custmr);
+//             if(err){
+//                 console.log(err);
+//                 res.status(500).json({status:'failure'});
+//             }
+//             if(result.length>=1){
+//                 console.log(result);
+//                 res.status(202).json(result);
+//             }else{
+//                 res.status(404).json({status:'Not Found'})
+//             }
+//         })
+//     })
+// })
+
+tailorSearchRoutes.post('/reserved',(req,res)=>{
     console.log("reserved");
     // hotelId: this.state.hotelId,
     Hotel.find({_id:req.body.hotelId},function(err,result){ //search searching city hotel available or not
@@ -179,4 +174,4 @@ hotelSearchRoutes.post('/reserved',(req,res)=>{
     })
 })
 
-module.exports = hotelSearchRoutes;
+module.exports = tailorSearchRoutes;

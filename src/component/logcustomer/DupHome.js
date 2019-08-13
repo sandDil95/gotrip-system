@@ -16,39 +16,39 @@ import img7 from '../../assets/images/icon_3.svg';
 import img8 from '../../assets/images/placeholder.png';
 import img9 from '../../assets/images/smartphone.png';
 import img10 from '../../assets/images/mail.png';
-import bell from '../../assets/images/bell.png';
 
-class Home extends Component {
+class DupHome extends Component {
     constructor(props){
         super(props);
         this.state = {
-            city : '',
-            start : '',
-            end : '',
-            rooms : '',
-            travellers : ''
+            email:props.location.email
         }
         this.onChange = this.onChange.bind(this);
-        this.handlePage = this.handlePage.bind(this);
+        this.logOut = this.logOut.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.bookHotel = this.bookHotel.bind(this);
-        this.login = this.login.bind(this);
     }
-    login(){
-        this.props.history.push('/login')
-    }
-    handlePage(){
-        this.props.history.push('/supplier-login')
+    logOut(){
+        this.props.history.push('/')
     }
     onChange(e){
         this.setState({[e.target.name]:e.target.value})
     }
     bookHotel(e){ //click booking vehicle
+        console.log("rrgrgrgrgrg")
         const val = e.target.value;
         console.log(val+"  val id");
         this.props.history.push({
-            pathname: '/hlogin',
-            state: { hotelId:val, rooms:this.state.rooms, travellers:this.state.travellers, city:this.state.city, start:this.state.start, end:this.state.end }
+            pathname: '/logged/Hotel/Hotelbooking',
+                state: {
+                    hotelId:this.state.hotelId,
+                    city:this.state.city,
+                    rooms:this.state.rooms,
+                    travellers:this.state.travellers,
+                    email:this.state.email,
+                    start:this.state.start,
+                    end: this.state.end,
+                }
         })     
     }
     onSubmit(e){
@@ -133,35 +133,29 @@ class Home extends Component {
                                     <nav class="main_nav">
                                         <ul class="d-flex flex-row align-items-center justify-content-start">
                                             <li className="nav-item active">
-                                                <Link to="/" className="nav-link">Accomadations</Link>
+                                                <Link to="/logged" className="nav-link">Accomadations</Link>
                                             </li>
                                             <li>
-                                                <Link to="/vehicle" className="nav-link">Vehicles</Link>
+                                                <Link to={{pathname:"/logged/vehicle", email: this.state.email}} className="nav-link">Vehicles</Link>
+                                                {/* <Link to="/logged/vehicle" className="nav-link">Vehicles</Link> */}
                                             </li>
                                             <li>
-                                                <Link to="/Travel-Packages" className="nav-link">Travel-Packages</Link>
+                                                <Link to={{pathname:"/logged/Travel-Packages", email: this.state.email}} className="nav-link">Travel-Packages</Link>
                                             </li>
                                             <li >
-                                                <Link to="/Tailor-Made-Tour" className="nav-link">Tailor-Made Tour</Link>
+                                                <Link to={{pathname:"/logged/Tailor-Made-Tour", email: this.state.email}} className="nav-link">Tailor-Made Tour</Link>
                                             </li>
                                             <li>
-                                                <Link to="/About-us" className="nav-link">About Us</Link>
+                                                <Link to={{pathname:"/logged/About-us", email: this.state.email}} className="nav-link">About Us</Link>
                                             </li>
                                         </ul>
                                     </nav>
                                     <div class="header_extra d-flex flex-row align-items-center justify-content-start ml-auto">
-                                        {/* <Link to="/" className="nav-link">
-                                            <div class="logo">
-                                                <img className="imglogo" src={bell} alt=""/>
-                                            </div>
-                                        </Link> */}
-                                        <div class="phone d-flex flex-row align-items-center justify-content-start">
-                                            <a onClick={this.login}>Login</a>
+                                        <div class="book_button trans_200">
+                                            <a onClick={this.logOut}>Log Out</a>
                                         </div>
-                                        <div class="phone d-flex flex-row align-items-center justify-content-start">
-                                            <a onClick={this.handlePage}>Supplier</a>
-                                        </div>
-                                    </div>
+                                    </div><br/>
+                                           
                                     <div class="hamburger ml-auto"><i class="fa fa-bars" aria-hidden="true"></i></div>
                                 </div>
                             </div>
@@ -517,4 +511,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default DupHome;

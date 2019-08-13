@@ -15,6 +15,7 @@ class HotelBooking extends Component {
         }
         this.reserved = this.reserved.bind(this);
     }
+    
     componentDidMount(){
         this.setState({
             hotelId : this.props.location.state.hotelId
@@ -22,7 +23,6 @@ class HotelBooking extends Component {
         this.state.hotelId = this.props.location.state.hotelId;
         this.state.email = this.props.location.state.email;
         console.log(this.state.hotelId+" :hotelid");
-        
         console.log(this.state.email+" :email");
         console.log(this.state.start+" : start");
         axios.get('http://localhost:4000/hotel/hotelbooking/'+this.state.hotelId+"/"+this.state.email)
@@ -35,8 +35,6 @@ class HotelBooking extends Component {
                         <div className="row">
                             <div className="col-sm-6">
                                 <div className="card">
-
-
                                     <img  src={'http://localhost:4000/uploads/'+booking.hotelImage} alt="Hotel Avatar: "/><br/>
                                 </div>
                             </div>
@@ -61,12 +59,6 @@ class HotelBooking extends Component {
     reserved(e){
         e.preventDefault();
         const bookingdetails = {
-            hotelId: this.state.hotelId,
-            city: this.state.city,
-            rooms:  this.state.rooms,
-            travellers:   this.state.travellers,
-            start:  this.state.start,
-            end:   this.state.end,
             email:   this.state.email
         }
         axios.post('http://localhost:4000/hotel/reserved/',bookingdetails)
@@ -75,7 +67,12 @@ class HotelBooking extends Component {
             this.props.history.push({
                 pathname: '/logged',
                 state: {
-                    email:this.state.email
+                    vehicleId:this.state.vehicleId,
+                    droplocation:this.state.droplocation,
+                    picklocation:this.state.picklocation,
+                    email:this.state.email,
+                    start:this.state.start,
+                    end: this.state.end,
                 }
             })
         },error=>{
@@ -89,7 +86,6 @@ class HotelBooking extends Component {
             // }
         })
     }
-    
     render(){
         return(
             <div>

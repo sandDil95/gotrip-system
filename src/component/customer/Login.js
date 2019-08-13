@@ -2,24 +2,16 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './css/Login.css';
 
-class HLogin extends Component {
+class Login extends Component {
     constructor(props){
         super(props);
-        this.state={
+        this.state = {
             email:'',
             passwrd:'',
-            hotelId:props.location.state.hotelId,
-            rooms: props.location.state.rooms,
-            travellers: props.location.state.travellers,
-            city: props.location.state.city,
-            start: props.location.state.start,
-            end: props.location.state.end,
         }
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onHandle = this.onHandle.bind(this);
-        // this.onwild = this.onwild.bind(this);
-        // this.onbeach = this.onbeach.bind(this);
     }
     onChange(e){
         this.setState({[e.target.name]:e.target.value})
@@ -37,19 +29,12 @@ class HLogin extends Component {
         .then(response=>{
             alert("Successfully logged")
             this.props.history.push({
-                pathname: '/Hotel/Hotelbooking',
+                pathname: '/logged',
                 state: {
-                    hotelId:this.state.hotelId,
-                    city:this.state.city,
-                    rooms:this.state.rooms,
-                    travellers:this.state.travellers,
-                    email:this.state.email,
-                    start:this.state.start,
-                    end: this.state.end,
+                    email:this.state.email
                 }
             })
         },error=>{
-            // if (error instanceof HttpErrorResponse){
             if(error.response.status===401){
                 alert("Incorrect Password!!!")
             }else if(error.response.status===404){
@@ -57,32 +42,14 @@ class HLogin extends Component {
             }
             // }
         })
-        // this.props.history.push({
-        //     pathname: '/Vehicle/vehiclebooking',
-        //     state: {vehicleId:this.state.vehicleId}
-        // })
     }
     onHandle(e){
         e.preventDefault();
-        // this.state.vehicleId = this.props.location.state.vehicleId;
         console.log(this.state.vehicleId);
         this.props.history.push({
-            pathname: '/hregister',
-            state: {vehicleId:this.state.vehicleId}
+            pathname: '/register'
         })
     }
-
-    // onwild(e){
-    //     e.preventDefault();
-    //     this.props.history.push("/WildLife")
-    // }
-
-    // onbeach(e){
-    //     e.preventDefault();
-        
-     
-    //     this.props.history.push("/beach")
-    // }
 
     render(){
         return(
@@ -114,4 +81,4 @@ class HLogin extends Component {
         )
     }
 }
-export default HLogin;
+export default Login;

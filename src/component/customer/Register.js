@@ -6,10 +6,7 @@ class Register extends Component {
     constructor(props){
         super(props);
         this.state={
-            fname:'',
-            email: '',
-            passwrd:'',
-            hotelId:''
+            email: ''
         }
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -21,19 +18,12 @@ class Register extends Component {
     onHandle(e){
         e.preventDefault();
         // eslint-disable-next-line
-        this.state.hotelId = this.props.location.state.hotelId;
-        console.log(this.state.hotelId);
         this.props.history.push({
-            pathname: '/vlogin',
-            state: {hotelId:this.state.hotelId}
+            pathname: '/login'
         })
     }
     onSubmit(e){
         e.preventDefault();
-        // eslint-disable-next-line
-        this.state.hotelId = this.props.location.state.hotelId;
-        console.log(this.state.hotelId);
-
         const customer = {
             fname:this.state.fname,
             email:this.state.email,
@@ -44,8 +34,7 @@ class Register extends Component {
         .then(response=>{
             alert("Successfully registered")
             this.props.history.push({
-                pathname: '/vlogin',
-                state: {hotelId:this.state.hotelId}
+                pathname: '/login'
             })
         },error=>{
             if(error.response.status===409){
