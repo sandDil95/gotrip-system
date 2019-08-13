@@ -20,6 +20,15 @@ import VRegister from './component/customer/VRegister';
 import HotelBooking from './component/customer/HotelBooking';
 import VehicleBooking from './component/customer/VehicleBooking';
 
+import whale_watching from './component/customer/whale_watching';
+import Udawalawa from './component/customer/Udawalawa';
+import Galle from './component/customer/galle';
+import classic from './component/customer/classic';
+import tour from './component/customer/tour';
+import wilpaththu from './component/customer/wilpaththu';
+import package_booking from './component/customer/package_booking';
+//supplier
+
 //logged customer
 import LogHome from './component/logcustomer/Home';
 import DupLogHome from './component/logcustomer/DupHome';
@@ -28,6 +37,7 @@ import LogTailor from './component/logcustomer/Tailor';
 import LogAbout from './component/logcustomer/About';
 import LogPackage from './component/logcustomer/Package';
 import LogHotelBooking from './component/logcustomer/HotelBooking';
+import LogVehicleBooking from './component/logcustomer/VehicleBooking';
 
 //supplier
 import SHome from './component/supplier/Home';
@@ -58,6 +68,14 @@ class App extends Component {
             <Route path="/supplier-login" exact component={SupLogin}/>
             <Route path="/supplier-register" exact component={SupRegister}/>
 
+            <Route path="/whale_watching" exact component={whale_watching}/>
+            <Route path="/Udawalawa" exact component={Udawalawa}/>
+            <Route path="/Galle" exact component={Galle}/>
+            <Route path="/classic" exact component={classic}/>
+            <Route path="/tour" exact component={tour}/>
+            <Route path="/wilpaththu" exact component={wilpaththu}/>
+            <Route path="/package_booking" exact component={package_booking }/>
+      
             <Route path="/login" exact component={Login}/>
             <Route path="/register" exact component={Register}/>
             <Route path="/hlogin" exact component={HLogin}/>
@@ -74,7 +92,7 @@ class App extends Component {
             <Route path="/logged/Tailor-Made-Tour" exact component={LogTailor}/>
             <Route path="/logged/About-us" exact component={LogAbout}/>
             <Route path="/logged/hotel/hotelbooking" exact component={LogHotelBooking}/>
-
+            <Route path="/logged/vehicle/vehiclebooking" exact component={LogVehicleBooking}/>
 
             <Route path="/supplier" exact component={SHome}/>
             <Route path="/supplier/vehiclereg" component={VehicleReg} />

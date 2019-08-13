@@ -1,4 +1,4 @@
-main{
+/* main{
     margin-top: 0px;
     background-color:lightsteelblue;
 }
@@ -26,8 +26,54 @@ h4{
 margin-left: 20px;
 margin-right: 20px;
 justify-content: center;
+} */
+
+main{
+    margin-top: 0px;
+    background-color:white;
 }
 
+
+
+p{
+    font-size:14px; 
+    color: black;
+}
+
+h4{
+    font-size:20px;
+    color: black;
+}
+.card-pkg{
+    
+    width:400px;
+    background-color: white;
+    margin-left: 10px;  
+    margin-top: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  
+
+}
+
+.card-deck{
+margin-left: 20px;
+margin-right: 20px;
+justify-content: center;
+}
+
+h5{
+    font: size 16px;
+    color: black;
+}
+
+.card-img-top{
+ height: 200px;
+  width: 100%;
+}
+
+.button{
+    float:right;
+}
 
 
 
