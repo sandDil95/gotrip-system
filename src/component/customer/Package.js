@@ -4,17 +4,21 @@ import imglogo from '../../assets/logo.png';
 import Footer from './Footer';
 import './css/Package.css';
 
-import yala from '../../assets/images/yala.jpg';
 import whale from '../../assets/images/whale.jpg';
+import udawalawa from '../../assets/images/udawalawa.jpg';
 import sigiriya from '../../assets/images/sigiriya.jpg';
-import kandy from '../../assets/images/kandy.jpg';
-import galle from '../../assets/images/galle.jpg';
-import colombo from '../../assets/images/colombo.jpg';
+import mirissa from '../../assets/images/mirissa.jpg';
+import galle_tour from '../../assets/images/galle_tour.jpg';
+import wilpaththu from '../../assets/images/wilpaththu.jpg';
+
 
 
 class Package extends Component {
     constructor(props){
         super(props);
+        this.state ={resultset:[
+            
+        ]}
         this.handlePage = this.handlePage.bind(this);
         this.login = this.login.bind(this);
     }
@@ -24,6 +28,7 @@ class Package extends Component {
     handlePage(){
         this.props.history.push('/supplier-login')
     }
+  
     render(){
         return(
             <div>
@@ -73,60 +78,191 @@ class Package extends Component {
                         </div>
                     </div>
                 </header><br/><br/><br/><br/><br/><br/><br/><br/>
-                <div className="inner cover lead" role="main">
 
+
+
+                <div className="inner cover lead" role="main">
                  <div className="card-deck">
+
+            
                     <div className="card-pkg ">
                         <div className="card-body " id="package">
-                            <img className="card-img-top" src={whale}  alt="" /><br/>
-                            <h4 className="card-title">Mirissa whale watching</h4>
-                            <p className="card-text">Blue whales are the biggest animal live on the earth and Mirissa is the one of most suitable spot to watch blue whales and other whales too.</p>
-                            <button className="btn btn-primary">Book now>></button>
+                            <img className="card-img-top" src={whale}  alt=""/><br/><br/>
+                            
+                            
+                            <div class="details">
+									<h4><b>Whale Watching Tour</b></h4>
+									<p>
+									Come watch, study and photograph the largest creatures on earth, 
+									a destination famed for some of the finest Whale and Dolphin sightings in the world. 
+									</p><br/>
+									<ul class="package-list">
+									<h5><li class="d-flex justify-content-between align-items-center">
+											<span>Duration</span>
+											<span>6 hours</span>
+										</li><br/>
+										
+										<li class="d-flex justify-content-between align-items-center">
+											<span>Price per person</span>
+											<a href="#" class="price-btn">$88</a>
+										</li><br/></h5>													
+									</ul>
+								</div>
+
+								<button className="btn btn-primary">Explore</button>
+								<button className="btn btn-warning" style={{float:'right'}}>Book now</button>
+								
                         </div>
                     </div>
                     <div className="card-pkg ">
                         <div className="card-body ">
-                            <img className="card-img-top" src={sigiriya} alt=""/><br/>
-                            <h4 className="card-title">Sigiriya</h4>
-                            <p className="card-text">sigiriya popular as eighth wonder of the world among the tourists and it was the one of Asia's oldest landscaped garden.</p>
-                            <button className="btn btn-primary">Book now>></button>
-                        </div>
+                            <img className="card-img-top" src={udawalawa} alt=""/>
+                            <br/><br/>
+							<div class="details">
+									<h4><b>Udawalawa Safari</b></h4>
+									<p>
+									Explore the finest and most luxurious wildlife splendours of Sri Lanka, 
+									in its untamed glory, with a stirring Sri Lanka Safari Ride. 	</p>
+									<br/>
+									<ul class="package-list">
+									<h5><li class="d-flex justify-content-between align-items-center">
+											<span>Duration</span>
+											<span>9 hours</span>
+										</li><br/> 
+										
+										<li class="d-flex justify-content-between align-items-center">
+											<span>Price per person</span>
+											<a href="#" class="price-btn">$104</a>
+										</li><br/></h5>												
+									</ul>
+								</div>
+
+								<button className="btn btn-primary">Explore</button>
+								<button className="btn btn-warning" style={{float:'right'}}>Book now</button>
+							</div>	
                     </div>
                     <div className="card-pkg ">
                         <div className="card-body ">
-                            <img className="card-img-top" src={colombo} alt=""/>
-                            <h4 className="card-title">Colombo City Tour</h4>
-                            <p className="card-text">The Colombo City Tour is Colombo's first ever open deck city tour service launched by Sri Lanka Tourism Development Authority and Ebert Silva Holidays (Pvt) Ltd.</p>
-                            <button className="btn btn-primary">Book now>></button>
-                        </div>
+                            <img className="card-img-top" src={galle_tour} alt=""/>
+                            <br/><br/>
+							<div class="details">
+									<h4><b>Galle Full Day Tour</b></h4>
+									<p>
+									Experience the colorful colonial city of Galle.
+									Explore and learn more about its tumultuous history as a hub for trade.
+									</p><br/>
+									<ul class="package-list">
+									<h5><li class="d-flex justify-content-between align-items-center">
+											<span>Duration</span>
+											<span>12 hours</span>
+										</li><br/>
+										
+										<li class="d-flex justify-content-between align-items-center">
+											<span>Price per person</span>
+											<a href="#" class="price-btn">$99</a>
+										</li><br/></h5>													
+									</ul>
+								</div>
+
+								<button className="btn btn-primary">Explore</button>
+								<button className="btn btn-warning" style={{float:'right'}}>Book now</button>
+							</div>	
+                    
                    </div>
                    <div className="card-pkg ">
                         <div className="card-body ">
-                             <img className="card-img-top" src={yala} alt=""/>
-                            <h4 className="card-title">Yala National Park</h4>
-                            <p className="card-text">This is the second largest national park in Sri Lanka.Yala is home to Asian elephants, leopards and variety of beautiful endemic birds.</p>
-                            <button class="btn btn-primary">Book now>></button>
+                             <img className="card-img-top" src={sigiriya} alt=""/>
+							 <br/><br/>
+							<div class="details">
+									<h4><b>Classic Mini Tour</b></h4>
+									<p>
+									Explore the classic attractions of Sri Lanka.experience the 
+									island's rich cultural & natural heritages.
+									</p><br/>
+									<ul class="package-list">
+									<h5><li class="d-flex justify-content-between align-items-center">
+											<span>Duration</span>
+											<span>4 days and 3 nights</span>
+										</li><br/>
+										
+										<li class="d-flex justify-content-between align-items-center">
+											<span>Price per person</span>
+											<a href="#" class="price-btn">$669</a>
+										</li><br/></h5>													
+									</ul>
+								</div>
+
+								<button className="btn btn-primary">Explore</button>
+								<button className="btn btn-warning" style={{float:'right'}}>Book now</button>
                         </div>
                     </div>
                     <div className="card-pkg ">
                         <div className="card-body ">
-                             <img className="card-img-top" src={kandy} alt=""/>
-                            <h4 className="card-title">Kandy</h4>
-                            <p className="card-text">The name Kandy was given to the city of Kanda Uda Rata by the British. Its present day Sri Lankan name is Maha Nuwara while the historical name is Senkadagalapura. Kandy history and heritage city of Kandy. </p>
-                            <button class="btn btn-primary">Book now>></button>
+                             <img className="card-img-top" src={mirissa} alt=""/>
+							 <br/><br/>
+							<div class="details">
+									<h4><b>Tour Srilanka</b></h4>
+									<p>
+									Discover the best tour in Sri Lanka, fill up 
+									your schedules with  luxurious, serene and exciting tropical holidays!
+									</p><br/>
+									<ul class="package-list">
+									<h5><li class="d-flex justify-content-between align-items-center">
+											<span>Duration</span>
+											<span>06 days and 5 nights</span>
+										</li><br/>
+										
+										<li class="d-flex justify-content-between align-items-center">
+											<span>Price per person</span>
+											<a href="#" class="price-btn">$1071</a>
+										</li><br/></h5>													
+									</ul>
+								</div>
+
+								<button className="btn btn-primary">Explore</button>
+								<button className="btn btn-warning" style={{float:'right'}}>Book now</button>
                         </div>
                     </div>
                     <div className="card-pkg ">
                         <div className="card-body ">
-                            <img className="card-img-top" src={galle} alt=""/>
-                            <h4 className="card-title">Galle Fort</h4>
-                            <p className="card-text">The Galle Fort, also known as the Dutch Fort or the "Ramparts of Galle", is a historical, archaeological and architectural heritage monument.</p>
-                            <button className="btn btn-primary">Book now>></button>
+                            <img className="card-img-top" src={wilpaththu} alt=""/>
+                            <br/><br/>
+							<div class="details">
+									<h4><b>Wilpaththu Tour</b></h4>
+									<p>
+									Enjoy the best Journey through the Wild in a quiet and unhurried way.
+									</p><br/>
+									<ul class="package-list">
+									<h5><li class="d-flex justify-content-between align-items-center">
+											<span>Duration</span>
+											<span>18 hours</span>
+										</li><br/>
+										
+										
+										<li class="d-flex justify-content-between align-items-center">
+											<span>Price per person</span>
+											<a href="#" class="price-btn">$130</a>
+										</li><br/></h5>													
+									</ul>
+								</div>
+
+								<button className="btn btn-primary">Explore</button>
+								<button className="btn btn-warning" style={{float:'right'}}>Book now</button>
                         </div>
                     </div>
                  </div>
 
-                </div><br/><br/><br/><br/>
+                </div>
+                
+                
+			
+			
+
+			
+			
+
+                
+                <br/><br/><br/><br/>
                 <Footer/>
             </div>
         )
