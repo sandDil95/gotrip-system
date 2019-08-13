@@ -35,15 +35,12 @@ const upload = multer({
 
 
 vehicleSearchRoutes.post('/add',upload.single('vehicleImage'),(req,res)=>{
-    console.log(req.file);
-    console.log(req.body.email);
-    Supplier.find({email:req.body.email},function(err,result){ 
-        console.log(result); 
-        console.log(result[0]._id); 
-        if(result.length>=1){
+   
+        
+    
             if(req.body.onlyVehicle === "driver"){
                 const vehicleDetails = new Vehicle({
-                    sId: result[0]._id,
+                    sId: req.body.SID,
                     // vehicleOwner :'',
                     vehicleNo : req.body.vehicleNo,
                     contactNo : req.body.contactNo,
@@ -73,7 +70,7 @@ vehicleSearchRoutes.post('/add',upload.single('vehicleImage'),(req,res)=>{
                 })
             }else{
                 const vehicleDetails = new Vehicle({
-                    sId: result[0]._id,
+                    sId: req.body.SID,
                     vehicleOwner :'',
                     vehicleNo : req.body.vehicleNo,
                     contactNo : req.body.contactNo,
@@ -101,12 +98,9 @@ vehicleSearchRoutes.post('/add',upload.single('vehicleImage'),(req,res)=>{
                         error: err
                     })
                 })
-            }
-        }else{
-            res.status(404).json({status: 'not found'});
-        }
+            }       
     })
-})
+
 
 vehicleSearchRoutes.get('/search/:vehicleStatus/:pickupLocation',(req,res)=>{
     var vStatus = req.params.vehicleStatus;

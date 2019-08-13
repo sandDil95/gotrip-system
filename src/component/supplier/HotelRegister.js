@@ -23,6 +23,7 @@ class HotelRegister extends Component{
     constructor(){
         super()
         this.state ={
+            SId:'',
             first_name:'',
             last_name:'',
             address:'',
@@ -55,6 +56,20 @@ class HotelRegister extends Component{
         this.onChange = this.onChange.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
     
+    }
+    getuserpayload(){
+        var token =localStorage.getItem('jwttoken')
+    console.log(token +"====")
+    if (token) {
+        var userPayload = atob(token.split('.')[1]);
+        return JSON.parse(userPayload);
+      }
+      else
+        return null;
+    }
+    componentDidMount(){
+        console.log(this.getuserpayload())
+       this.setState({SID:this.getuserpayload()})
     }
 
    onChange(e){

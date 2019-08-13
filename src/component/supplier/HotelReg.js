@@ -21,6 +21,7 @@ const formValid = formErrors =>{
 }
 
 
+
 class HotelReg extends Component{
     constructor(props){
         super(props)
@@ -62,6 +63,23 @@ class HotelReg extends Component{
         this.onChange = this.onChange.bind(this);
         this.hotelRegister = this.hotelRegister.bind(this);
         this.handlePage = this.handlePage.bind(this);
+        console.log(this.getuserpayload())
+
+    }
+
+    getuserpayload=()=>{
+        var token =localStorage.getItem('jwttoken')
+    console.log(token +"====")
+    if (token) {
+        var userPayload = atob(token.split('.')[1]);
+        return JSON.parse(userPayload);
+      }
+      else
+        return null;
+    }
+    componentDidMount(){
+        console.log(this.getuserpayload())
+       this.setState({SID:this.getuserpayload()})
     }
     handlePage(){
         this.props.history.push('/')
@@ -207,6 +225,7 @@ class HotelReg extends Component{
         console.error('Form Invalid - Display Error Masage');
     }
     const obj = {
+        SID:this.getuserpayload()._id,
         email: this.props.email,
         hotelName : this.state.hotelName,
         contactNo  :this.state.contactNo,
@@ -221,7 +240,6 @@ class HotelReg extends Component{
         triple_room_payment : this.state.triple_room_payment,
         quad_room_num : this.state.quad_room_num,
         quad_room_payment : this.state.quad_room_payment,
-        // vehicleImage : '',
    };
    axios.post( 'http://localhost:4000/hotel/add/',obj )
        .then(res => {

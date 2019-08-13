@@ -14,16 +14,47 @@ class Profile extends Component{
             email:'',
             address:'',
         }
-        // this.onChange = this.onChange.bind(this)
+        this.onChange = this.onChange.bind(this)
         // this.onSubmit = this.onSubmit.bind(this)
         this.handlePage = this.handlePage.bind(this);
+         axios.get('http://localhost:4000/user/supplier/'+ this.getuserpayload()._id).then(res=>{
+console.log(res.data)
+this.setState({
+    first_name:res.data.first_name,
+    last_name:res.data.last_name,
+    email:res.data.email
+
+})
+         }).catch(err=>{
+
+         })
+        
+    }
+
+    updateprofile=(e)=>{
+        e.preventDefault()
+        axios.put('http://localhost:4000/user/updateprofile/'+ this.getuserpayload()._id ,this.state).then(res=>{
+            alert("success")
+    })
+ 
     }
     handlePage(){
         this.props.history.push('/')
     }
-    // onChange(e){
-    //     this.setState({[e.target.name]:e.target.value})
-    // }
+    onChange(e){
+        this.setState({[e.target.name]:e.target.value})
+    }
+    getuserpayload(){
+        var token =localStorage.getItem('jwttoken')
+    console.log(token +"====")
+    if (token) {
+        var userPayload = atob(token.split('.')[1]);
+        return JSON.parse(userPayload);
+      }
+      else
+        return null;
+    }
+
 
     // onSubmit(e){
     //     e.preventDefault()
@@ -127,7 +158,7 @@ class Profile extends Component{
                          <div className ="col-sm-8 mx-auto">
                              <h1 className ="text-center">PROFILE</h1>
                          </div>
-                         <table className=" table col-md-6 mx-auto">
+                         {/* <table className=" table col-md-6 mx-auto">
                              <tbody>
                                  <tr>
                                      <th>First Name</th>
@@ -151,7 +182,37 @@ class Profile extends Component{
                                     
                                 </tr>
                             </tbody>
-                        </table>
+                        </table> */}
+                   <form>
+                   <div>
+  <label>
+  First Name
+    <input type="text" name="first_name" value={this.state.first_name} onChange={this.onChange} />
+  </label>
+  </div>  
+  <div> 
+  <label>
+  Last Name
+    <input type="text" name="last_name" value={this.state.last_name} onChange={this.onChange} />
+  </label>
+  </div>  
+  <div>
+  <label>
+  Email
+      <input type="text" name="email" value={this.state.email} onChange={this.onChange}/>
+  </label>
+  </div>
+  <div>
+  <label>
+      
+  Address
+    <input type="text" name="address" value={this.state.address} onChange={this.onChange} />
+  </label>
+  </div>
+  <input type="submit" value="Submit" onClick={this.updateprofile}/>
+
+ 
+</form>
                     </div>
                 </div>
                 <Footer/>
