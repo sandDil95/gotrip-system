@@ -30,6 +30,7 @@ class Login extends Component{
       };
       axios.post('http://localhost:4000/user/login/',obj)
           .then(res => {
+            //   alert(JSON.stringify(res))
                    if(res){
                     this.props.history.push({
                         pathname: '/supplier',

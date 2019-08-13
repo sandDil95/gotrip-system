@@ -3,6 +3,23 @@ import {BrowserRouter as Router,Routes,Link} from "react-router-dom";
 import imglogo from '../../assets/logo.png';
 import Footer from './Footer';
 import axios from 'axios';
+import validator from 'validator'
+
+const validatePhoneNumber = number => {
+    const isValidPhoneNumber = validator.isMobilePhone(number)
+    return (isValidPhoneNumber)
+}
+//const emailRegex = RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+const telNum = RegExp(/^[0-9]*$/);
+const formValid = formErrors =>{
+    let valid = true;
+
+    Object.values(formErrors).forEach(val => {
+        val.length > 0 && (valid = false);
+    });
+    return valid;
+}
+
 
 class HotelReg extends Component{
     constructor(props){
@@ -22,6 +39,25 @@ class HotelReg extends Component{
             quad_room_num : '',
             quad_room_payment : '',
             hotelImage : '',
+            formErrors:{
+                hotelName:"",
+                address:"",
+                place:"",
+                hotelType:"",
+                single_room_num:"",
+                single_room_payment:"",
+                double_room_num:"",
+                double_room_payment:"",
+                triple_room_num:"",
+                triple_room_payment:"",
+                quad_room_num:"",
+                quad_room_payment:"",
+
+
+            },
+            number:{
+                contactNo:""
+            }
         }
         this.onChange = this.onChange.bind(this);
         this.hotelRegister = this.hotelRegister.bind(this);
@@ -32,7 +68,95 @@ class HotelReg extends Component{
     }
 
    onChange(e){
-       this.setState({[e.target.name]:e.target.value})
+    const {name , value} = e.target;
+    let formErrors = this.state.formErrors;
+    let number = this.state.number;
+    switch(name){
+        case'hotelName':
+            formErrors.hotelName = 
+                value.length < 3 
+                    ? "minimum 3 characaters required"
+                    :"";
+            break;
+        case'address':
+            formErrors.place = 
+                value.length < 3
+                    ? "minimum 3 characaters required"
+                    :"";
+            break;
+        case'place':
+        formErrors.place = 
+            value.length < 3
+                ? "minimum 3 characaters required"
+                :"";
+        break;
+        
+        case'contactNo':
+        number.contactNo = 
+            value.length <10 || value.length >10
+            ? "Invalid Phone Number"
+            :"";
+        break;
+        case'contactNo':
+        number.contactNo = 
+            telNum.test(value)
+                ?''
+                :"Invalid Phone Number";
+        break;
+        
+        case'single_room_num':
+        formErrors.single_room_num = 
+            value.length > 2
+                ? "maximum 2 number required"
+                :"";
+        break;
+        case'single_room_payment':
+        formErrors.single_room_payment = 
+            value.length < 2 
+                ? "minimum 2 characaters required"
+                :"";
+        break;
+        case'double_room_num':
+        formErrors.double_room_num = 
+            value.length > 2
+                ? "maximum 2 number required"
+                :"";
+        break;
+        case'double_room_payment':
+        formErrors.double_room_payment = 
+            value.length < 2 
+                ? "minimum 2 characaters required"
+                :"";
+        break;
+        case'triple_room_num':
+        formErrors.triple_room_num = 
+            value.length > 2
+                ? "maximum 2 number required"
+                :"";
+        break;
+        case'triple_room_payment':
+        formErrors.triple_room_payment = 
+            value.length < 2 
+                ? "minimum 2 characaters required"
+                :"";
+        break;
+        case'quad_room_num':
+        formErrors.quad_room_num = 
+            value.length > 2
+                ? "maximum 2 number required"
+                :"";
+        break;
+        case'quad_room_payment':
+        formErrors.quad_room_payment = 
+            value.length < 2 
+                ? "minimum 2 characaters required"
+                :"";
+        break;
+    default:
+    break;
+    }
+    this.setState({formErrors ,[name]:value},()=>console.log(this.state));
+    this.setState({number ,[name]:value} ,()=>console.log(this.state));
    }
 //    onSubmit(e){
 //        e.preventDefault()
@@ -59,6 +183,29 @@ class HotelReg extends Component{
    hotelRegister(e){
     e.preventDefault();
     console.log(this.state.email);
+    if(formValid(this.state.formErrors)|| validatePhoneNumber(this.state.number)){
+        console.log(`
+             --SUBMITING--
+             hotelName:${this.state.hotelName},
+             contactNo:${this.state.contactNo},
+             address:${this.state.address},
+             place:${this.state.place},
+             hotelType:${this.state.hotelType},
+             contactNo:${this.state.contactNo},
+             single_room_num:${this.state.single_room_num},
+             single_room_payment:${this.state.single_room_payment},
+             double_room_num:${this.state.double_room_num},
+             double_room_payment:${this.state.double_room_payment},
+             triple_room_num:${this.state.triple_room_num},
+             triple_room_payment:${this.state.triple_room_payment},
+             quad_room_num:${this.state.quad_room_num},
+             quad_room_payment:${this.state.quad_room_payment},
+             
+        `)
+    }
+    else{
+        console.error('Form Invalid - Display Error Masage');
+    }
     const obj = {
         email: this.props.email,
         hotelName : this.state.hotelName,
@@ -105,6 +252,8 @@ class HotelReg extends Component{
 //    }
 
     render(){
+        const {formErrors} = this.state;
+        const {number} = this.state;
         return(
             <div>
                 <header class="header">
@@ -163,8 +312,11 @@ class HotelReg extends Component{
                                             placeholder ="Enter hotel name"
                                             value ={this.state.hotelName}
                                             onChange ={this.onChange}
-                                    
+                                            noValidate
                                         />
+                                        {formErrors.hotelName.length>0 && (
+                                        <span className="errorMessage">{formErrors.hotelName}</span>
+                                    )}
                                     </div>
                                 
                                     <div className="col-lg-6">
@@ -174,8 +326,11 @@ class HotelReg extends Component{
                                             placeholder ="Enter Contact Number"
                                             value ={this.state.contactNo}
                                             onChange ={this.onChange}
-                                    
+                                            noValidate
                                         />
+                                        {number.contactNo.length>0 && (
+                                        <span className="errorMessage">{number.contactNo}</span>
+                                    )}
                                     </div>
                                 </div><br/>
                                 <input type ="text"
@@ -184,8 +339,11 @@ class HotelReg extends Component{
                                     placeholder ="Enter Address"
                                     value ={this.state.address}
                                     onChange ={this.onChange}
-                            
+                                    noValidate
                                 /><br/>
+                                {formErrors.address.length>0 && (
+                                        <span className="errorMessage">{formErrors.address}</span>
+                                    )}  
                                 <div className="row">
                                             <div className="col-lg-6">
                                                 <input type="text"
@@ -195,7 +353,11 @@ class HotelReg extends Component{
                                                     placeholder ="Nearby City"
                                                     value={this.state.place}
                                                     onChange={this.onChange}
+                                                    noValidate
                                                 />  
+                                                {formErrors.place.length>0 && (
+                                                <span className="errorMessage">{formErrors.place}</span>
+                                            )}
                                             </div> 
                                             <div className="col-lg-6">
                                                 <select className="form-control" 
@@ -232,11 +394,11 @@ class HotelReg extends Component{
                                                 placeholder ="Number of Rooms"
                                                 value ={this.state.single_room_num}
                                                 onChange ={this.onChange}
-                                                //noValidate
+                                                noValidate
                                         />
-                                        {/* {formErrors.pay_per_onekm.length>0 && (
-                                            <span className="errorMessage">{formErrors.pay_per_onekm}</span>
-                                        )} */}
+                                        {formErrors.single_room_num.length>0 && (
+                                            <span className="errorMessage">{formErrors.single_room_num}</span>
+                                        )}
                                     </div>
                                     <div className="col-lg-4">
                                         <input type ="text"
@@ -246,11 +408,11 @@ class HotelReg extends Component{
                                                 placeholder ="Payment Per Room"
                                                 value ={this.state.single_room_payment}
                                                 onChange ={this.onChange}
-                                                //noValidate
+                                                noValidate
                                         />
-                                        {/* {formErrors.pay_per_onekm.length>0 && (
-                                            <span className="errorMessage">{formErrors.pay_per_onekm}</span>
-                                        )} */}
+                                        {formErrors.single_room_payment.length>0 && (
+                                            <span className="errorMessage">{formErrors.single_room_payment}</span>
+                                        )}
                                     </div>
                                 </div><br/>
                                 <div className ="row">
@@ -265,11 +427,11 @@ class HotelReg extends Component{
                                                 placeholder ="Number of Rooms"
                                                 value ={this.state.double_room_num}
                                                 onChange ={this.onChange}
-                                                //noValidate
+                                                noValidate
                                         />
-                                        {/* {formErrors.pay_per_onekm.length>0 && (
-                                            <span className="errorMessage">{formErrors.pay_per_onekm}</span>
-                                        )} */}
+                                        {formErrors.double_room_num.length>0 && (
+                                            <span className="errorMessage">{formErrors.double_room_num}</span>
+                                        )}
                                     </div>
                                     <div className="col-lg-4">
                                         <input type ="text"
@@ -279,11 +441,11 @@ class HotelReg extends Component{
                                                 placeholder ="Payment Per Room"
                                                 value ={this.state.double_room_payment}
                                                 onChange ={this.onChange}
-                                                //noValidate
+                                                noValidate
                                         />
-                                        {/* {formErrors.pay_per_onekm.length>0 && (
-                                            <span className="errorMessage">{formErrors.pay_per_onekm}</span>
-                                        )} */}
+                                        {formErrors.double_room_payment.length>0 && (
+                                            <span className="errorMessage">{formErrors.double_room_payment}</span>
+                                        )}
                                     </div>
                                 </div><br/>
                                 <div className ="row">
@@ -298,11 +460,11 @@ class HotelReg extends Component{
                                                 placeholder ="Number of Rooms"
                                                 value ={this.state.triple_room_num}
                                                 onChange ={this.onChange}
-                                                //noValidate
+                                                noValidate
                                         />
-                                        {/* {formErrors.pay_per_onekm.length>0 && (
-                                            <span className="errorMessage">{formErrors.pay_per_onekm}</span>
-                                        )} */}
+                                        {formErrors.triple_room_num.length>0 && (
+                                            <span className="errorMessage">{formErrors.triple_room_num}</span>
+                                        )}
                                     </div>
                                     <div className="col-lg-4">
                                         <input type ="text"
@@ -312,11 +474,11 @@ class HotelReg extends Component{
                                                 placeholder ="Payment Per Room"
                                                 value ={this.state.triple_room_payment}
                                                 onChange ={this.onChange}
-                                                //noValidate
+                                                noValidate
                                         />
-                                        {/* {formErrors.pay_per_onekm.length>0 && (
-                                            <span className="errorMessage">{formErrors.pay_per_onekm}</span>
-                                        )} */}
+                                        {formErrors.triple_room_payment.length>0 && (
+                                            <span className="errorMessage">{formErrors.triple_room_payment}</span>
+                                        )}
                                     </div>
                                 </div><br/>
                                 <div className ="row">
@@ -327,30 +489,51 @@ class HotelReg extends Component{
                                         <input type ="text"
                                                 className="form-control"
                                                 //className={formErrors.pay_per_onekm.length >0 ? "error" :null}
-                                                name = "double_room_num"
+                                                name = "quade_room_num"
                                                 placeholder ="Number of Rooms"
                                                 value ={this.state.quade_room_num}
                                                 onChange ={this.onChange}
-                                                //noValidate
+                                                noValidate
                                         />
-                                        {/* {formErrors.pay_per_onekm.length>0 && (
-                                            <span className="errorMessage">{formErrors.pay_per_onekm}</span>
+                                        {/* {formErrors.quade_room_num.length>0 && (
+                                            <span className="errorMessage">{formErrors.quade_room_num}</span>
                                         )} */}
                                     </div>
                                     <div className="col-lg-4">
                                         <input type ="text"
                                                 className="form-control"
                                                 //className={formErrors.pay_per_onekm.length >0 ? "error" :null}
-                                                name = "double_room_payment"
+                                                name = "quade_room_payment"
                                                 placeholder ="Payment Per Room"
                                                 value ={this.state.quade_room_payment}
                                                 onChange ={this.onChange}
-                                                //noValidate
+                                                noValidate
                                         />
-                                        {/* {formErrors.pay_per_onekm.length>0 && (
-                                            <span className="errorMessage">{formErrors.pay_per_onekm}</span>
+                                        {/* {formErrors.quade_room_payment.length>0 && (
+                                            <span className="errorMessage">{formErrors.quade_room_payment}</span>
                                         )} */}
                                     </div>
+                                </div><br/>
+
+                                <div className ="row">
+                                    <label>Hotel Image : </label>
+                                    <div className="col-lg-6">
+                                        {/* <label htmlFor = "vehicle_model">Vehicle Model </label> */}
+                                        <input type ="file"
+                                                className="form-control"
+                                                //className={formErrors.vehicle_model.length >0 ? "error" :null}
+                                                name = "hotelImage"
+                                                placeholder ="Choose Hotel Photo"
+                                                value ={this.state.hotelImage}
+                                                onChange ={this.onChange}
+                                                //noValidate
+                                        
+                                        />
+                                        {/* {formErrors.vehicle_model.length>0 && (
+                                            <span className="errorMessage">{formErrors.vehicle_model}</span>
+                                        )} */}
+                                    </div>
+                                    
                                 </div><br/>
                                 
                                 {/* <button onClick = {this.fileUploadedHandler} type ="submit" className ="btn btn-primary btn--block">
