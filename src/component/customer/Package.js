@@ -16,8 +16,11 @@ class Package extends Component {
     constructor(props){
         super(props);
         this.handlePage = this.handlePage.bind(this);
+        this.login = this.login.bind(this);
     }
-
+    login(){
+        this.props.history.push('/login');
+    }
     handlePage(){
         this.props.history.push('/supplier-login')
     }
@@ -57,7 +60,10 @@ class Package extends Component {
                                         </ul>
                                     </nav>
                                     <div class="header_extra d-flex flex-row align-items-center justify-content-start ml-auto">
-                                        <div class="book_button trans_200">
+                                        <div class="phone d-flex flex-row align-items-center justify-content-start">
+                                            <a onClick={this.login}>Login</a>
+                                        </div>
+                                        <div class="phone d-flex flex-row align-items-center justify-content-start">
                                             <a onClick={this.handlePage}>Supplier</a>
                                         </div>
                                     </div>
