@@ -109,7 +109,7 @@ class Vehicle extends Component {
             this.props.history.push({
                 pathname: '/logged/vehicle/vehiclebooking',
                 state: {
-                    vehicleId:this.state.vehicleId,
+                    vehicleId:e.target.value,
                     picklocation:this.state.picklocation,
                     droplocation:this.state.droplocation,
                     email:this.state.email,

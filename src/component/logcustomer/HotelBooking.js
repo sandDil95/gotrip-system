@@ -59,6 +59,12 @@ class HotelBooking extends Component {
     reserved(e){
         e.preventDefault();
         const bookingdetails = {
+            hotelId: this.state.hotelId,
+            city: this.state.city,
+            rooms:  this.state.rooms,
+            travellers:   this.state.travellers,
+            start:  this.state.start,
+            end:   this.state.end,
             email:   this.state.email
         }
         axios.post('http://localhost:4000/hotel/reserved/',bookingdetails)
@@ -67,12 +73,7 @@ class HotelBooking extends Component {
             this.props.history.push({
                 pathname: '/logged',
                 state: {
-                    vehicleId:this.state.vehicleId,
-                    droplocation:this.state.droplocation,
-                    picklocation:this.state.picklocation,
-                    email:this.state.email,
-                    start:this.state.start,
-                    end: this.state.end,
+                    email:this.state.email
                 }
             })
         },error=>{

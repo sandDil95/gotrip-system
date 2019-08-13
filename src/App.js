@@ -37,6 +37,7 @@ import LogTailor from './component/logcustomer/Tailor';
 import LogAbout from './component/logcustomer/About';
 import LogPackage from './component/logcustomer/Package';
 import LogHotelBooking from './component/logcustomer/HotelBooking';
+import LogVehicleBooking from './component/logcustomer/VehicleBooking';
 
 //supplier
 import SHome from './component/supplier/Home';
@@ -74,7 +75,7 @@ class App extends Component {
             <Route path="/tour" exact component={tour}/>
             <Route path="/wilpaththu" exact component={wilpaththu}/>
             <Route path="/package_booking" exact component={package_booking }/>
-
+      
             <Route path="/login" exact component={Login}/>
             <Route path="/register" exact component={Register}/>
             <Route path="/hlogin" exact component={HLogin}/>
@@ -91,7 +92,7 @@ class App extends Component {
             <Route path="/logged/Tailor-Made-Tour" exact component={LogTailor}/>
             <Route path="/logged/About-us" exact component={LogAbout}/>
             <Route path="/logged/hotel/hotelbooking" exact component={LogHotelBooking}/>
-
+            <Route path="/logged/vehicle/vehiclebooking" exact component={LogVehicleBooking}/>
 
             <Route path="/supplier" exact component={SHome}/>
             <Route path="/supplier/vehiclereg" component={VehicleReg} />

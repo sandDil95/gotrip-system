@@ -39,9 +39,9 @@ class Home extends Component {
         const val = e.target.value;
         console.log(val+"  val id");
         this.props.history.push({
-            pathname: '/logged/Hotel/Hotelbooking',
+            pathname: '/logged/hotel/hotelbooking',
                 state: {
-                    hotelId:this.state.hotelId,
+                    hotelId:e.target.value,
                     city:this.state.city,
                     rooms:this.state.rooms,
                     travellers:this.state.travellers,
