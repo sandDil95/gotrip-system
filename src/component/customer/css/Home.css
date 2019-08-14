@@ -8,7 +8,7 @@
     background-size: 100% 750px;
 }
 #contentbody{
-  background-color:whitesmoke;
+    background-color:whitesmoke;
 }
 #sideimg{
     height:85%;
@@ -42,4 +42,8 @@
 }
 #jpg7{
     background:url('../../../assets/images/gallery_5.jpg')
+}
+
+.section_title{
+    padding-top: 0px;
 }

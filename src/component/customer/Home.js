@@ -17,7 +17,8 @@ import img8 from '../../assets/images/placeholder.png';
 import img9 from '../../assets/images/smartphone.png';
 import img10 from '../../assets/images/mail.png';
 import bell from '../../assets/images/bell.png';
-
+import hotel from '../../assets/images/hotel.jpg';
+import hotel1 from '../../assets/images/hotel1.jpg';
 class Home extends Component {
     constructor(props){
         super(props);
@@ -194,7 +195,7 @@ class Home extends Component {
                     </div>
                     <div class="search_box"><br/><br/><br/><br/></div>
                     <div class="search_box">
-                        <div class="container">
+                        <div class="container" >
                             <div class="row">
                                 <div class="col">
                                     <div class="search_box_container d-flex flex-row align-items-center justify-content-start">
@@ -245,28 +246,29 @@ class Home extends Component {
                             <div class="row">
                                 <div class="col">
                                     <div class="section_title_container text-center">
-                                        <div class="section_title"><h1>Beach Hotel- More than a stay</h1></div>
-                                        <div class="section_text">In vitae nisi aliquam, scelerisque leo a, volutpat sem. Vivamus rutrum dui fermentum eros hendrerit, id lobortis leo volutpat. Maecenas sollicitudin est in libero pretium interdum.</div>
+                                        <div class="section_title"><h1>Have The Best Holiday...</h1></div>
+                                        <div class="section_text">hotels and resorts</div>
                                     </div><br/>
                                 </div>
                             </div>
                             <div class="row intro_row">
                                 <div class="col-lg-6">
-                                    <div class="intro_image"><img src={img2} id="sideimg"/></div>
+                                    <div class="intro_image"><img src={hotel1} id="sideimg"/></div>
                                 </div>
-                                <div class="col-lg-6 intro_col">
+                                <div class="col-lg-6 ">
                                     <div class="intro_content">
-                                        <div class="quote"><img src={img3} alt=""/></div>
-                                        <div class="intro_text">
+                                        <div class="quote"><img src={hotel} alt=""/></div>
+                                        
+                                        {/*<div class="intro_text">
                                             <p>In vitae nisi aliquam, scelerisque leo a, volutpat sem. Vivamus rutrum dui fermentum eros hendrerit, id lobortis leo volutpat. Maecenas sollicitudin est in libero pretium interdum. Nullam volutpat dui sem, ac congue purus hendrerit, id lobortis leo luctus nec.</p>
-                                        </div><br/><br/>
-                                        <div class="intro_author d-flex flex-row align-items-center justify-content-start">
+                                        </div>*/}<br/><br/>
+                                        {/*<div class="intro_author d-flex flex-row align-items-center justify-content-start">
                                             <div class="author_image"><img src={img4} alt="https://unsplash.com/@onurozkardes"/></div>
                                             <div class="intro_author_content">
                                                 <div class="intro_author_name">Michael Williams</div>
                                                 <div class="intro_author_title">client</div>
                                             </div>
-                                        </div>
+                    </div>*/}
                                     </div>
                                 </div>
                             </div>
@@ -328,9 +330,9 @@ class Home extends Component {
                                     <div class="icon_box text-center">
                                         <div class="icon_box_icon"><img id="x" src={img5} alt=""/></div>
                                         <div class="icon_box_title"><h2>Beautiful Rooms</h2></div>
-                                        <div class="icon_box_text">
+                                       {/*<div class="icon_box_text">
                                             <p>In vitae nisi aliquam, scelerisque leo a, volutpat sem. Vivamus rutrum dui fermentum eros hendrerit, id lobortis leo volutpat.</p>
-                                        </div>
+                        </div>*/}
                                     </div>
                                 </div>
 
@@ -339,9 +341,9 @@ class Home extends Component {
                                     <div class="icon_box text-center">
                                         <div class="icon_box_icon"><img id="x" src={img6} alt=""/></div>
                                         <div class="icon_box_title"><h2>Swimming Pool</h2></div>
-                                        <div class="icon_box_text">
+                                        {/*<div class="icon_box_text">
                                             <p>In vitae nisi aliquam, scelerisque leo a, volutpat sem. Vivamus rutrum dui fermentum eros hendrerit, id lobortis leo volutpat.</p>
-                                        </div>
+                                        </div>*/}
                                     </div>
                                 </div>
                                 
@@ -350,9 +352,9 @@ class Home extends Component {
                                     <div class="icon_box text-center">
                                         <div class="icon_box_icon"><img id="x" src={img7} alt=""/></div>
                                         <div class="icon_box_title"><h2>Luxury Resort</h2></div>
-                                        <div class="icon_box_text">
+                                        {/*<div class="icon_box_text">
                                             <p>In vitae nisi aliquam, scelerisque leo a, volutpat sem. Vivamus rutrum dui fermentum eros hendrerit, id lobortis leo volutpat.</p>
-                                        </div>
+                                        </div>*/}
                                     </div>
                                 </div>
 
@@ -413,7 +415,7 @@ class Home extends Component {
 
                         {/* Newsletter */}
 
-                        <div class="newsletter">
+                         {/*<div class="newsletter">
                             <div class="container">
                                 <div class="row">
                                     <div class="col">
@@ -422,18 +424,18 @@ class Home extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row newsletter_row">
+                                <div class="row newsletter_row">*/}
                                     
-                                    {/* Newsletter Content */}
+                                    {/* Newsletter Content 
                                     <div class="col-lg-6">
                                         <div class="newsletter_content">
                                             <div class="newsletter_text">
                                                 <p>In vitae nisi aliquam, scelerisque leo a, volutpat sem. Vivamus rutrum dui fermentum eros hendrerit, id lobortis leo volutpat. Maecenas sollicitudin est in libero pretium interdum.</p>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>*/}
 
-                                    {/* Newsletter Form */}
+                                    {/* Newsletter Form 
                                     <div class="col-lg-6 newsletter_col">
                                         <form action="#" class="newsletter_form" id="newsletter_form">
                                             <input type="email" class="newsletter_input" placeholder="Your email" required="required"/>
@@ -468,7 +470,7 @@ class Home extends Component {
 
                                             </div>
 
-                                            {/* Contact Info Box */}
+                                            {/* Contact Info Box 
                                             <div class="contact_info_box d-flex flex-column align-items-center justify-content-center">
                                                 <ul class="contact_info_list">
                                                     <li class="d-flex flex-row align-items-start justify-content-start">
@@ -484,12 +486,12 @@ class Home extends Component {
                                                         <div class="contact_info_text">yourmail@gmail.com</div>
                                                     </li>
                                                 </ul>
-                                            </div>
+                                            </div>*/}
 
                                         </div>
                                     </div>
                                     
-                                    {/* Contact Form */}
+                                    {/* Contact Form 
                                     <div class="col-xl-6 contact_col">
                                         <div class="contact_form_container">
                                             <div class="section_title_container_2">
@@ -505,7 +507,7 @@ class Home extends Component {
                                                 <button class="contact_button">send message</button>
                                             </form>
                                         </div>
-                                    </div>
+                                    </div>*/}
                                 </div>
                             </div>
                         </div>
