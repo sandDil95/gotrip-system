@@ -31,7 +31,7 @@ let Vehicle = new Schema({
         required:false
     },
     onlyVehicle:{
-        type:Boolean,
+        type:String,
         required:true
     },
     ppkm:{ //pay per kilometer

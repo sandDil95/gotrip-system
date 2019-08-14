@@ -16,8 +16,8 @@ const storage = multer.diskStorage({
         cb(null,'./uploads');
     },
     filename: function(req,file,cb){
-        name = Date.now() +file.originalname;
-        cb(null,name);
+        name = Date.now() +req.body.vehicleNo;
+        cb(null,name + ".jpg");
     }
 });
 
@@ -34,72 +34,80 @@ const upload = multer({
 });
 
 
-vehicleSearchRoutes.post('/add',upload.single('vehicleImage'),(req,res)=>{
-   
-        console.log(req.body.SID)
-    
-            if(req.body.onlyVehicle === "driver"){
-                const vehicleDetails = new Vehicle({
-                    sId: req.body.SID,
-                    // vehicleOwner :'',
-                    vehicleNo : req.body.vehicleNo,
-                    contactNo : req.body.contactNo,
-                    beginingDate : req.body.beginingDate,
-                    endingDate : req.body.endingDate,
-                    locations : req.body.locations,
-                    seatsNo : req.body.seatsNo,
-                    onlyVehicle : false,
-                    ppkm : req.body.ppkm,
-                    vehicleModel : req.body.vehicleModel,
-                    // vehicleImage : '',
-                    vehicleImage : name,
-                    booking : false
-                })
-                vehicleDetails.save()
-                .then(result=>{
-                    console.log(result);
-                    res.status(201).json({
-                        message : 'vehicle added'
-                    })
-                })
-                .catch(err => {
-                    console.log(err);
-                    res.status(500).json({
-                        error: err
-                    })
-                })
-            }else{
-                const vehicleDetails = new Vehicle({
-                    sId: req.body.SID,
-                    vehicleOwner :'',
-                    vehicleNo : req.body.vehicleNo,
-                    contactNo : req.body.contactNo,
-                    beginingDate : req.body.beginingDate,
-                    endingDate : req.body.endingDate,
-                    seatsNo : req.body.seatsNo,
-                    onlyVehicle : true,
-                    ppkm : req.body.ppkm,
-                    vehicleModel : req.body.vehicleModel,
-                    locations : req.body.locations,
-                    vehicleImage : '',
-                    // vehicleImage : name,
-                    booking : false
-                })
-                vehicleDetails.save()
-                .then(result=>{
-                    console.log(result);
-                    res.status(201).json({
-                        message : 'vehicle added'
-                    })
-                })
-                .catch(err => {
-                    console.log(err);
-                    res.status(500).json({
-                        error: err
-                    })
-                })
-            }       
+vehicleSearchRoutes.post('/add',upload.any(),(req,res)=>{
+    console.log("Saving")
+    const vehicle = new Vehicle(req.body)
+    vehicle.save().then(result=>{
+        res.status(201).json({
+            message:"send"
+        })
     })
+        // console.log(req.body.SID)
+        // console.log("FILES"+req.files.vehicleImage)
+        //     if(req.body.onlyVehicle === "driver"){
+        //         const vehicleDetails = new Vehicle({
+        //             sId: req.body.SID,
+        //             // vehicleOwner :'',
+        //             vehicleNo : req.body.vehicleNo,
+        //             contactNo : req.body.contactNo,
+        //             beginingDate : req.body.beginingDate,
+        //             endingDate : req.body.endingDate,
+        //             locations : req.body.locations,
+        //             seatsNo : req.body.seatsNo,
+        //             onlyVehicle : false,
+        //             ppkm : req.body.ppkm,
+        //             vehicleModel : req.body.vehicleModel,
+        //             //vehicleImage : '',
+        //             vehicleImage : name,
+        //             booking : false
+        //         })
+        //         vehicleDetails.save()
+        //         .then(result=>{
+        //             console.log(result);
+        //             res.status(201).json({
+        //                 message : 'vehicle added'
+        //             })
+        //         })
+        //         .catch(err => {
+        //             console.log(err);
+        //             res.status(500).json({
+        //                 error: err
+        //             })
+        //         })
+        //     }else{
+        //         const vehicleDetails = new Vehicle({
+        //             sId: req.body.SID,
+        //             vehicleOwner :'',
+        //             vehicleNo : req.body.vehicleNo,
+        //             contactNo : req.body.contactNo,
+        //             beginingDate : req.body.beginingDate,
+        //             endingDate : req.body.endingDate,
+        //             seatsNo : req.body.seatsNo,
+        //             onlyVehicle : true,
+        //             ppkm : req.body.ppkm,
+        //             vehicleModel : req.body.vehicleModel,
+        //             locations : req.body.locations,
+        //             vehicleImage : '',
+        //             // vehicleImage : name,
+        //             booking : false
+        //         })
+        //         vehicleDetails.save()
+        //         .then(result=>{
+        //             console.log(result);
+        //             res.status(201).json({
+        //                 message : 'vehicle added'
+        //             })
+        //         })
+        //         .catch(err => {
+        //             console.log(err);
+        //             res.status(500).json({
+        //                 error: err
+        //             })
+        //         })
+        //     }       
+    })
+
+
 
 
 vehicleSearchRoutes.get('/search/:vehicleStatus/:pickupLocation',(req,res)=>{

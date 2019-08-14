@@ -58,6 +58,7 @@ class VehicleReg extends Component{
         // this.onSubmit = this.onSubmit.bind(this)
         // this.logintosupplier = this.logintosupplier.bind(this);
         this.vehiRegister = this.vehiRegister.bind(this);
+        this.onsubmit2 = this.onsubmit2.bind(this);
         this.handlePage = this.handlePage.bind(this);
     }
     handlePage(){
@@ -179,7 +180,7 @@ class VehicleReg extends Component{
         ppkm : this.state.ppkm,
         vehicleModel : this.state.vehicleModel,
         locations : this.state.locations,
-        // vehicleImage : '',
+        vehicleImage : '',
    };
    axios.post( 'http://localhost:4000/vehicle/add/',obj )
        .then(res => {
@@ -193,6 +194,22 @@ class VehicleReg extends Component{
    }
    componentDidMount(){
        console.log(this.props.email);
+   }
+
+   onsubmit2(e){
+    e.preventDefault();
+    console.log(e.target)
+    const payload = new FormData(document.getElementById("vform"));
+    payload.append('booking',false)
+    axios.post( 'http://localhost:4000/vehicle/add/',payload )
+       .then(res => {
+                if(res){
+                    alert("added successfully")
+                    // this.props.history.push('/supplier')
+                }else{
+                    alert("failed")
+                }
+            })
    }
 
     render(){
@@ -246,7 +263,7 @@ class VehicleReg extends Component{
                     {/* <div className ="container"> */}
                     <div className ="row">
                         <div className ="col-md-6 mt-5 mx-auto">
-                            <form className = "form-container" noValidate onSubmit ={this.onSubmit}> 
+                            <form className = "form-container"  id="vform"noValidate onSubmit ={this.onSubmit2}> 
                                 <h1 className ="h3 mb-3 font-weight-normal">Register your vehicle</h1><br/>
                                 {/* {this.props.email}<br/> */}
                                 <div className="row">
@@ -409,6 +426,7 @@ class VehicleReg extends Component{
                                     <div className="col-lg-6">
                                         {/* <label htmlFor = "vehicle_model">Vehicle Model </label> */}
                                         <input type ="file"
+                                                id = "vimg"
                                                 className="form-control"
                                                 //className={formErrors.vehicle_model.length >0 ? "error" :null}
                                                 name = "vehicleImage"
@@ -428,7 +446,7 @@ class VehicleReg extends Component{
                                         Register
                                 </button>
                                 <p>Are you already Signup? */}
-                                    <button onClick = {this.vehiRegister} type ="submit" className ="btn btn-primary btn--block">
+                                    <button onClick = {this.onsubmit2} type ="submit" className ="btn btn-primary btn--block">
                                             Register
                                     </button>
                                 {/* </p> */}

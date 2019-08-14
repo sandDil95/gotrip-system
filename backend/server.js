@@ -10,7 +10,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.json())
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended:false }))
-
+app.use(express.static('uploads'));
 app.use('/uploads',express.static('uploads'));
 
 
