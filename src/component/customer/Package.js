@@ -20,6 +20,45 @@ class Package extends Component {
             
         ]}
         this.handlePage = this.handlePage.bind(this);
+        this.view1 = this.view1.bind(this);
+        this.view2 = this.view2.bind(this);
+        this.view3 = this.view3.bind(this);
+        this.view4 = this.view4.bind(this);
+        this.view5 = this.view5.bind(this);
+        this.view6 = this.view6.bind(this);
+        this.view7 = this.view7.bind(this);
+
+
+
+    }
+
+    view1(e){
+        this.props.history.push('/whale_watching')
+
+    }
+    view2(e){
+        this.props.history.push('/Udawalawa')
+
+    }
+    view3(e){
+        this.props.history.push('/Galle')
+
+    }
+    view4(e){
+        this.props.history.push('/classic')
+
+    }
+    view5(e){
+        this.props.history.push('/tour')
+
+    }
+    view6(e){
+        this.props.history.push('/wilpaththu')
+
+    }
+    view7(e){
+        this.props.history.push('/package_booking')
+
     }
 
     handlePage(){
@@ -103,8 +142,9 @@ class Package extends Component {
 									</ul>
 								</div>
 
-								<button className="btn btn-primary">Explore</button>
-								<button className="btn btn-warning" style={{float:'right'}}>Book now</button>
+								<button onClick={this.view1} type="submit" className="btn btn-primary">Explore</button>
+                            
+								<button onClick={this.view7} type="submit" className="btn btn-warning" style={{float:'right'}}>Book now</button>
 								
                         </div>
                     </div>
@@ -131,8 +171,8 @@ class Package extends Component {
 									</ul>
 								</div>
 
-								<button className="btn btn-primary">Explore</button>
-								<button className="btn btn-warning" style={{float:'right'}}>Book now</button>
+								<button onClick={this.view2} type="submit" className="btn btn-primary">Explore</button>
+								<button onClick={this.view7} type="submit" className="btn btn-warning" style={{float:'right'}}>Book now</button>
 							</div>	
                     </div>
                     <div className="card-pkg ">
@@ -158,8 +198,8 @@ class Package extends Component {
 									</ul>
 								</div>
 
-								<button className="btn btn-primary">Explore</button>
-								<button className="btn btn-warning" style={{float:'right'}}>Book now</button>
+								<button onClick={this.view3} type="submit" className="btn btn-primary">Explore</button>
+								<button onClick={this.view7} type="submit" className="btn btn-warning" style={{float:'right'}}>Book now</button>
 							</div>	
                     
                    </div>
@@ -186,8 +226,8 @@ class Package extends Component {
 									</ul>
 								</div>
 
-								<button className="btn btn-primary">Explore</button>
-								<button className="btn btn-warning" style={{float:'right'}}>Book now</button>
+								<button onClick={this.view4} type="submit" className="btn btn-primary">Explore</button>
+								<button onClick={this.view7} type="submit" className="btn btn-warning" style={{float:'right'}}>Book now</button>
                         </div>
                     </div>
                     <div className="card-pkg ">
@@ -213,8 +253,8 @@ class Package extends Component {
 									</ul>
 								</div>
 
-								<button className="btn btn-primary">Explore</button>
-								<button className="btn btn-warning" style={{float:'right'}}>Book now</button>
+								<button onClick={this.view5} type="submit" className="btn btn-primary">Explore</button>
+								<button onClick={this.view7} type="submit" className="btn btn-warning" style={{float:'right'}}>Book now</button>
                         </div>
                     </div>
                     <div className="card-pkg ">
@@ -240,8 +280,8 @@ class Package extends Component {
 									</ul>
 								</div>
 
-								<button className="btn btn-primary">Explore</button>
-								<button className="btn btn-warning" style={{float:'right'}}>Book now</button>
+								<button onClick={this.view6} type="submit" className="btn btn-primary">Explore</button>
+								<button onClick={this.view7} type="submit" className="btn btn-warning" style={{float:'right'}}>Book now</button>
                         </div>
                     </div>
                  </div>
