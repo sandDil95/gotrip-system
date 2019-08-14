@@ -16,7 +16,9 @@ class Profile extends Component {
         }
         this.onChange = this.onChange.bind(this)
         // this.onSubmit = this.onSubmit.bind(this)
+
         this.handlePage = this.handlePage.bind(this);
+
         axios.get('http://localhost:4000/user/supplier/' + this.getuserpayload()._id).then(res => {
             console.log(res.data)
             this.setState({
@@ -30,6 +32,23 @@ class Profile extends Component {
         })
 
     }
+
+    importAll = (r) => {
+        return r.keys().map(r);
+    }
+    showImages = () => {
+
+        const images = this.importAll(require.context("D:/gotrip-system/src/component/supplier/upload", false, /\.(png|jpe?g|svg)$/));
+        console.log(images);
+        return images.map((data) => {
+            var path = JSON.stringify(data).substring(14, 28) + ".jpg"
+            return (
+                <img style={{ width: 100, height: 100, borderRadius: 50, alignSelf: 'center' }} src={require("./upload"+path)} class="rounded-circle" alt="Cinque Terre" />
+            )
+        })
+
+    }
+
 
     selectImages = (e) => {
         e.preventDefault();
@@ -53,6 +72,7 @@ class Profile extends Component {
         axios.put('http://localhost:4000/user/updateprofile/' + this.getuserpayload()._id, this.state).then(res => {
             alert("success")
         })
+
 
     }
     handlePage() {
@@ -178,9 +198,9 @@ class Profile extends Component {
                             <img style={{ width: 100, height: 100, borderRadius: 50, alignSelf: 'center' }} src={require("./profile.jpg")} class="rounded-circle" alt="Cinque Terre"></img>
                             <br />
                             <form className="form-container" id="vform" noValidate onSubmit={this.selectImages}>
-                                <input type="file" name="myfile"  id="vimg" />
+                                <input type="file" name="myfile" id="vimg" />
                                 <input type="submit" />
-                            </form>
+                            </form>                           
                         </div>
 
                         {/* <table className=" table col-md-6 mx-auto">
@@ -227,17 +247,23 @@ class Profile extends Component {
                                      <input type="text" name="email" value={this.state.email} onChange={this.onChange} />
                                 </label>
                             </div>
-                            <div>
+                            {/* <div>
                                 <label>
 
                                     Address
                                     <input type="text" name="address" value={this.state.address} onChange={this.onChange} />
                                 </label>
-                            </div>
-                            <input type="submit" value="Submit" onClick={this.updateprofile} />
+                            </div> */}
+                            <input type="submit" value="Upload" onClick={this.updateprofile} />
 
 
                         </form>
+                        <br></br>
+
+                        <p>supplier Images</p>
+                        {/* <img style={{ width: 100, height: 100, borderRadius: 50, alignSelf: 'center' }} src={require("./upload/1565782692157.jpg")} class="rounded-circle" alt="Cinque Terre" />
+           */}
+                        {this.showImages()}
                     </div>
                 </div>
                 <Footer />

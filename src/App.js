@@ -43,7 +43,8 @@ import LogVehicleBooking from './component/logcustomer/VehicleBooking';
 import SHome from './component/supplier/Home';
 import VehicleReg from './component/supplier/VehicleReg';
 import HotelReg from './component/supplier/HotelReg';
-import Profile from './component/supplier/Profile'
+import Profile from './component/supplier/Profile';
+import Notify from './component/supplier/NotifyEndTrip';
 import SRegister from './component/supplier/Register';
 
 //dashboard
@@ -99,6 +100,7 @@ class App extends Component {
             <Route path="/supplier/hotelreg" component={HotelReg}/>
             <Route path="/supplier/Register" component={SRegister}/>
             <Route path="/supplier/profile" component={Profile} />
+            <Route path="/supplier/Notify" component={Notify}></Route>
 
             <Route path="/dashboard" exact component={Dashboard} />
             <Route path="/dashboard/bookings" exact component={Bookings} />

@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
         cb(null,'D:/gotrip-system/src/component/supplier/upload');
     },
     filename: function(req,file,cb){
-        name = Date.now() +req.body.vehicleNo;
+        name = Date.now();
         cb(null,name + ".jpg");
     }
 });
