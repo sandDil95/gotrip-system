@@ -11,89 +11,121 @@ users.use(cors())
 
 process.env.SECRET_KEY = 'secret'
 
-users.post('/register' , (req , res)=>{
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function(req,file,cb){
+        cb(null,'D:/gotrip-system/src/component/supplier');
+    },
+    filename: function(req,file,cb){
+        name = "profile";
+        cb(null,name + ".jpg");
+    }
+});
+const fileFilter = (req,file,cb)=>{
+    //reject a file
+    if(file.mimetype==='image/jpeg'||file.mimetype==='image/png'){
+        cb(null,true);
+    }
+    cb(null,false);    
+};
+const upload = multer({
+    storage : storage,
+    fileFilter: fileFilter
+});
+
+
+users.post('/register', (req, res) => {
     const today = new Date()
     const userData = {
-        first_name:req.body.first_name,
-        last_name:req.body.last_name,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
         // address:req.body.address,
-        email:req.body.email,
-        password:req.body.password,
-        created:today
+        email: req.body.email,
+        password: req.body.password,
+        created: today
     }
 
     User.findOne({
-        email:req.body.email
+        email: req.body.email
     })
-    .then(user =>{
-        if(!user){
-            bcrypt.hash(req.body.password , 10 ,(err , hash)=>{
-                userData.password = hash
-                User.create(userData)
-                .then(user => {
-                    res.json({status:user.email + 'registered!'})
+        .then(user => {
+            if (!user) {
+                bcrypt.hash(req.body.password, 10, (err, hash) => {
+                    userData.password = hash
+                    User.create(userData)
+                        .then(user => {
+                            res.json({ status: user.email + 'registered!' })
+                        })
+                        .catch(err => {
+                            res.send('error :' + err)
+                        })
                 })
-                .catch(err => {
-                    res.send('error :' + err)
-                })
-            })
-        }
-        else{
-            res.json({error:'User already exists'})
-        }
-    })
-    .catch(err => {
-        res.send('error:' +err)
-    })
+            }
+            else {
+                res.json({ error: 'User already exists' })
+            }
+        })
+        .catch(err => {
+            res.send('error:' + err)
+        })
 })
-users.post("/login",(req,res,next)=>{
+users.post("/login", (req, res, next) => {
     console.log("ds")
-    User.find({email: req.body.email})
-    .exec()
-    .then(user=>{
-        if(user.length<1){ //when email is not in the database
-            return res.status(404).json({//not found entered email or invalid email
-                message: 'Invalid email'
-            })
-        }else{ //when entered email matched 
-            bcrypt.compare(req.body.password,user[0].password,(err,result)=>{
-                if(err){
-                    console.log("f")
-                    return res.status(401).json({//unauthorized user login(invalid password entered)
+    User.find({ email: req.body.email })
+        .exec()
+        .then(user => {
+            if (user.length < 1) { //when email is not in the database
+                return res.status(404).json({//not found entered email or invalid email
+                    message: 'Invalid email'
+                })
+            } else { //when entered email matched 
+                bcrypt.compare(req.body.password, user[0].password, (err, result) => {
+                    if (err) {
+                        console.log("f")
+                        return res.status(401).json({//unauthorized user login(invalid password entered)
+                            message: 'failed'
+                        });
+                    }
+                    if (result) {
+                        // const token = jwt.sign(//jwt authentication
+                        //     {
+                        //         email: user[0].email,
+                        //         userId: user[0]._id
+                        //     },
+                        //     "secret",
+                        //     { 
+                        //         expiresIn: "1h"
+                        //     }
+                        // );
+                        return res.status(200).json({//valid login
+                            message: "Successfully Logged",
+                            token: user[0].generateJwt()
+                        })
+                    }
+                    res.status(401).json({//unauthorized login
                         message: 'failed'
                     });
-                }
-                if(result){
-                    // const token = jwt.sign(//jwt authentication
-                    //     {
-                    //         email: user[0].email,
-                    //         userId: user[0]._id
-                    //     },
-                    //     "secret",
-                    //     { 
-                    //         expiresIn: "1h"
-                    //     }
-                    // );
-                    return res.status(200).json({//valid login
-                        message: "Successfully Logged",
-                        token:user[0].generateJwt()
-                    })
-                }
-                res.status(401).json({//unauthorized login
-                    message: 'failed'
-                });
-            })
-        }
-        
-    })
-    .catch(err=>{
-        console.log(err);
-        res.status(500).json({//not implemented
-            error: err
-        });
-    });
-})
+                })
+            }
 
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({//not implemented
+                error: err
+            });
+        });
+})
+users.post('/addImage', upload.any(), (req, res) => {
+    console.log("Saving")
+    // const vehicle = new Vehicle(req.body)
+    // user.save().then(result => {
+    //     res.status(201).json({
+    //         message: "send"
+    //     })
+    // })
+
+})
 // users.post('/login' ,(req , res)=>{
 //     User.findOne({
 //         email:req.body.email
@@ -160,7 +192,7 @@ users.post("/login",(req,res,next)=>{
 //     var last_name = req.params.last_name;
 //     var email = req.params.email;
 //     console.log(vStatus);
-     
+
 //     if(vStatus==='driver'){
 //         var oVehicle=false;
 //         console.log(oVehicle);
@@ -182,28 +214,28 @@ users.post("/login",(req,res,next)=>{
 //         }
 //     })
 // })
-users.get('/supplier/:id' ,(req , res)=>{
-   // var decoded = jwt.verify(req.headers['authorization'] ,process.env.SECRET_KEY)
+users.get('/supplier/:id', (req, res) => {
+    // var decoded = jwt.verify(req.headers['authorization'] ,process.env.SECRET_KEY)
 
     User.findById(req.params.id)
-    .then(user=>{
-        if(user){
-            res.json(user)
-        }else{
-            res.send("User does not exist")
-        }
-    })
-    .catch(err=>{
-        res.send('error: ' +err)
-    })
+        .then(user => {
+            if (user) {
+                res.json(user)
+            } else {
+                res.send("User does not exist")
+            }
+        })
+        .catch(err => {
+            res.send('error: ' + err)
+        })
 })
 
-users.put('/updateprofile/:id',(req,res)=>{
-    User.findByIdAndUpdate(req.params.id,{$set:req.body},(err,doc)=>{
-        if(!err){
+users.put('/updateprofile/:id', (req, res) => {
+    User.findByIdAndUpdate(req.params.id, { $set: req.body }, (err, doc) => {
+        if (!err) {
             res.send(doc)
         }
-        else{
+        else {
             console.log(err)
             res.send(err)
         }

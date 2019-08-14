@@ -45,6 +45,7 @@ class HotelReg extends Component{
                 address:"",
                 place:"",
                 hotelType:"",
+                hotelImage:"",
                 single_room_num:"",
                 single_room_payment:"",
                 double_room_num:"",
@@ -62,6 +63,7 @@ class HotelReg extends Component{
         }
         this.onChange = this.onChange.bind(this);
         this.hotelRegister = this.hotelRegister.bind(this);
+        this.onsubmit2 = this.onsubmit2.bind(this);
         this.handlePage = this.handlePage.bind(this);
         console.log(this.getuserpayload())
 
@@ -240,6 +242,7 @@ class HotelReg extends Component{
         triple_room_payment : this.state.triple_room_payment,
         quad_room_num : this.state.quad_room_num,
         quad_room_payment : this.state.quad_room_payment,
+        hotelImage : '',
    };
    axios.post( 'http://localhost:4000/hotel/add/',obj )
        .then(res => {
@@ -268,6 +271,21 @@ class HotelReg extends Component{
 //    fileUploadedHandler = () =>{
 //         axios.post('http://');
 //    }
+onsubmit2(e){
+    e.preventDefault();
+    console.log(e.target)
+    const payload = new FormData(document.getElementById("vform"));
+    payload.append('booking',false)
+    axios.post( 'http://localhost:4000/hotel/add/',payload )
+       .then(res => {
+                if(res){
+                    alert("added successfully")
+                    // this.props.history.push('/supplier')
+                }else{
+                    alert("failed")
+                }
+            })
+   }
 
     render(){
         const {formErrors} = this.state;
@@ -319,7 +337,7 @@ class HotelReg extends Component{
                     {/* <div className ="container"> */}
                     <div className ="row">
                         <div className ="col-md-6 mt-5 mx-auto">
-                            <form className = "form-container" onSubmit ={this.onSubmit}> 
+                            <form className = "form-container" id="vform"noValidate onSubmit ={this.onSubmit2}> 
                                 
                                 <h1 className ="h3 mb-3 font-weight-normal">Register your Accomadation</h1><br/>
                                 <div className="row">
@@ -558,7 +576,7 @@ class HotelReg extends Component{
                                         Register
                                 </button>
                                 <p>Are you already Signup? */}
-                                    <button onClick = {this.hotelRegister} type ="submit" className ="btn btn-primary btn--block">
+                                    <button onClick = {this.onsubmit2} type ="submit" className ="btn btn-primary btn--block">
                                             Register
                                     </button>
                                 {/* </p> */}

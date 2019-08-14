@@ -1,58 +1,75 @@
-import React , {Component} from 'react';
-import {BrowserRouter as Router,Routes,Link} from "react-router-dom";
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Routes, Link } from "react-router-dom";
 import imglogo from '../../assets/logo.png';
 import Footer from './Footer';
-import {imageupload} from './UserFunctions';
+import { imageupload } from './UserFunctions';
 import axios from 'axios';
 
-class Profile extends Component{
-    constructor(){
+class Profile extends Component {
+    constructor() {
         super()
-        this.state ={
-            first_name:'',
-            last_name:'',
-            email:'',
-            address:'',
+        this.state = {
+            first_name: '',
+            last_name: '',
+            email: '',
+            address: '',
         }
         this.onChange = this.onChange.bind(this)
         // this.onSubmit = this.onSubmit.bind(this)
         this.handlePage = this.handlePage.bind(this);
-         axios.get('http://localhost:4000/user/supplier/'+ this.getuserpayload()._id).then(res=>{
-console.log(res.data)
-this.setState({
-    first_name:res.data.first_name,
-    last_name:res.data.last_name,
-    email:res.data.email
+        axios.get('http://localhost:4000/user/supplier/' + this.getuserpayload()._id).then(res => {
+            console.log(res.data)
+            this.setState({
+                first_name: res.data.first_name,
+                last_name: res.data.last_name,
+                email: res.data.email
 
-})
-         }).catch(err=>{
+            })
+        }).catch(err => {
 
-         })
-        
+        })
+
     }
 
-    updateprofile=(e)=>{
+    selectImages = (e) => {
+        e.preventDefault();
+        // console.log(e.target)
+        const payload = new FormData(document.getElementById("vform"));
+        payload.append('booking', false)
+        axios.post('http://localhost:4000/user/addImage/', payload)
+            .then(res => {
+                if (res) {
+                    alert("added successfully")
+                    // this.props.history.push('/supplier')
+                } else {
+                    alert("failed")
+                }
+            })
+    }
+
+
+    updateprofile = (e) => {
         e.preventDefault()
-        axios.put('http://localhost:4000/user/updateprofile/'+ this.getuserpayload()._id ,this.state).then(res=>{
+        axios.put('http://localhost:4000/user/updateprofile/' + this.getuserpayload()._id, this.state).then(res => {
             alert("success")
-    })
- 
+        })
+
     }
-    handlePage(){
+    handlePage() {
         this.props.history.push('/')
     }
-    onChange(e){
-        this.setState({[e.target.name]:e.target.value})
+    onChange(e) {
+        this.setState({ [e.target.name]: e.target.value })
     }
-    getuserpayload(){
-        var token =localStorage.getItem('jwttoken')
-    console.log(token +"====")
-    if (token) {
-        var userPayload = atob(token.split('.')[1]);
-        return JSON.parse(userPayload);
-      }
-      else
-        return null;
+    getuserpayload() {
+        var token = localStorage.getItem('jwttoken')
+        console.log(token + "====")
+        if (token) {
+            var userPayload = atob(token.split('.')[1]);
+            return JSON.parse(userPayload);
+        }
+        else
+            return null;
     }
 
 
@@ -60,19 +77,19 @@ this.setState({
     //     e.preventDefault()
     //     console.log("Succesfuly"); 
     //     const ImageUpload ={
-           
+
     //         vehicale_photo:this.state.vehicale_photo,
     //         profile_image:this.state.profile_image
-            
-            
-        
+
+
+
     //     }
     //     imageupload(ImageUpload).then(res => {
     //              if(ImageUpload){
     //                  this.props.history.push('/profile')
     //              }
-                
-            
+
+
     //     })
     // }
     // componentDidMount(){
@@ -86,7 +103,7 @@ this.setState({
     //         address:decoded.address
     //     })
     // }    
-            // file:decoded.file,
+    // file:decoded.file,
     // componentDidMount(){
     //     axios.get('http://localhost:4000/supplier')
     //     const token = localStorage.usertoken
@@ -106,10 +123,10 @@ this.setState({
     //     //   console.log(error);
     //     // })
     //     })
-        
+
     // }
-    render(){
-        return(
+    render() {
+        return (
 
             <div>
                 <header class="header">
@@ -120,7 +137,7 @@ this.setState({
                                     <Link to="/supplier" className="nav-link">
                                         <div class="logo">
                                             {/* <a href="#"> */}
-                                                <img className="imglogo" src={imglogo} alt=""/>
+                                            <img className="imglogo" src={imglogo} alt="" />
                                             {/* </a> */}
                                         </div>
                                     </Link>
@@ -152,13 +169,21 @@ this.setState({
                         </div>
                     </div>
                 </header>
-                <div><br/><br/><br/><br/><br/><br/><br/></div>
-                <div className ="container">
-                    <div className="jumbotron mt-5"> 
-                         <div className ="col-sm-8 mx-auto">
-                             <h1 className ="text-center">PROFILE</h1>
-                         </div>
-                         {/* <table className=" table col-md-6 mx-auto">
+                <div><br /><br /><br /><br /><br /><br /><br /></div>
+                <div className="container">
+                    <div className="jumbotron mt-5">
+                        <div className="col-sm-8 mx-auto text-center">
+                            <h1 className="text-center">PROFILE</h1>
+
+                            <img style={{ width: 100, height: 100, borderRadius: 50, alignSelf: 'center' }} src={require("./profile.jpg")} class="rounded-circle" alt="Cinque Terre"></img>
+                            <br />
+                            <form className="form-container" id="vform" noValidate onSubmit={this.selectImages}>
+                                <input type="file" name="myfile"  id="vimg" />
+                                <input type="submit" />
+                            </form>
+                        </div>
+
+                        {/* <table className=" table col-md-6 mx-auto">
                              <tbody>
                                  <tr>
                                      <th>First Name</th>
@@ -183,40 +208,40 @@ this.setState({
                                 </tr>
                             </tbody>
                         </table> */}
-                   <form>
-                   <div>
-  <label>
-  First Name
-    <input type="text" name="first_name" value={this.state.first_name} onChange={this.onChange} />
-  </label>
-  </div>  
-  <div> 
-  <label>
-  Last Name
-    <input type="text" name="last_name" value={this.state.last_name} onChange={this.onChange} />
-  </label>
-  </div>  
-  <div>
-  <label>
-  Email
-      <input type="text" name="email" value={this.state.email} onChange={this.onChange}/>
-  </label>
-  </div>
-  <div>
-  <label>
-      
-  Address
-    <input type="text" name="address" value={this.state.address} onChange={this.onChange} />
-  </label>
-  </div>
-  <input type="submit" value="Submit" onClick={this.updateprofile}/>
+                        <form>
+                            <div>
+                                <label>
+                                    First Name
+                                    <input type="text" name="first_name" value={this.state.first_name} onChange={this.onChange} />
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    Last Name
+                                     <input type="text" name="last_name" value={this.state.last_name} onChange={this.onChange} />
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    Email
+                                     <input type="text" name="email" value={this.state.email} onChange={this.onChange} />
+                                </label>
+                            </div>
+                            <div>
+                                <label>
 
- 
-</form>
+                                    Address
+                                    <input type="text" name="address" value={this.state.address} onChange={this.onChange} />
+                                </label>
+                            </div>
+                            <input type="submit" value="Submit" onClick={this.updateprofile} />
+
+
+                        </form>
                     </div>
                 </div>
-                <Footer/>
-                </div>
+                <Footer />
+            </div>
         )
     }
 }
