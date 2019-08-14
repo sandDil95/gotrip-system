@@ -42,6 +42,10 @@ class Vehicle extends Component {
         this.bookVehicle = this.bookVehicle.bind(this);
         this.myFunction = this.myFunction.bind(this);
         this.vehicleBook = this.vehicleBook.bind(this);
+        this.login = this.login.bind(this);
+    }
+    login(){
+        this.props.history.push('/login');
     }
     getDate() {
         const now = new Date();
@@ -205,7 +209,10 @@ class Vehicle extends Component {
                                         </ul>
                                     </nav>
                                     <div class="header_extra d-flex flex-row align-items-center justify-content-start ml-auto">
-                                        <div class="book_button trans_200">
+                                        <div class="phone d-flex flex-row align-items-center justify-content-start">
+                                            <a onClick={this.login}>Login</a>
+                                        </div>
+                                        <div class="phone d-flex flex-row align-items-center justify-content-start">
                                             <a onClick={this.handlePage}>Supplier</a>
                                         </div>
                                     </div>

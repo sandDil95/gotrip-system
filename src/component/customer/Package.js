@@ -60,7 +60,6 @@ class Package extends Component {
         this.props.history.push('/package_booking')
 
     }
-
     handlePage(){
         this.props.history.push('/supplier-login')
     }
@@ -101,7 +100,10 @@ class Package extends Component {
                                         </ul>
                                     </nav>
                                     <div class="header_extra d-flex flex-row align-items-center justify-content-start ml-auto">
-                                        <div class="book_button trans_200">
+                                        <div class="phone d-flex flex-row align-items-center justify-content-start">
+                                            <a onClick={this.login}>Login</a>
+                                        </div>
+                                        <div class="phone d-flex flex-row align-items-center justify-content-start">
                                             <a onClick={this.handlePage}>Supplier</a>
                                         </div>
                                     </div>

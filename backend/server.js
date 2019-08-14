@@ -11,7 +11,7 @@ app.use(bodyParser.json())
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended:false }))
 
-//app.use('/uploads',express.static('uploads'));
+app.use('/uploads',express.static('uploads'));
 
 
 const mongoURI = 'mongodb+srv://sanduni:sand1234@cluster0-rygt6.mongodb.net/test?retryWrites=true'
