@@ -44,6 +44,9 @@ class Home extends Component {
                                             <li>
                                                 <Link to="/supplier/hotelreg" className="nav-link">Hotel-Registration</Link>
                                             </li>
+                                            {/* <li>
+                                                <Link to="/supplier/Notify" className="nav-link">Notifying</Link>
+                                            </li> */}
                                             <li>
                                                 <Link to="/supplier/profile" className="nav-link">Profile</Link>
                                             </li>
@@ -64,7 +67,7 @@ class Home extends Component {
 
 
                 <div id="contentbody">
-                    <div id="content-bodyy" className="card">
+                    <div id="content-body" className="card">
                         {/* Menu */}                        
                         <br/><br/><br/><br/><br/><br/><br/><br/>
                         <div class="home">
@@ -84,7 +87,7 @@ class Home extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div class="search_box"><br/><br/><br/><br/></div>
+                        <div class="search_box"><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></div>
                     </div>
 
                     

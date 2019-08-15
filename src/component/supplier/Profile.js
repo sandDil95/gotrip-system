@@ -43,7 +43,7 @@ class Profile extends Component {
         return images.map((data) => {
             var path = JSON.stringify(data).substring(14, 28) + ".jpg"
             return (
-                <img style={{ width: 100, height: 100, borderRadius: 50, alignSelf: 'center' }} src={require("./upload"+path)} class="rounded-circle" alt="Cinque Terre" />
+                <img style={{ width: 100, height: 100, alignSelf: 'center' }} src={require("./upload"+path)} class="rounded-circle" alt="Cinque Terre" />
             )
         })
 
@@ -173,6 +173,9 @@ class Profile extends Component {
                                             <li>
                                                 <Link to="/supplier/hotelreg" className="nav-link">Hotel-Registration</Link>
                                             </li>
+                                            {/* <li>
+                                                <Link to="/supplier/Notify" className="nav-link">Notifying</Link>
+                                            </li> */}
                                             <li>
                                                 <Link to="/supplier/profile" className="nav-link">Profile</Link>
                                             </li>
@@ -199,7 +202,8 @@ class Profile extends Component {
                             <br />
                             <form className="form-container" id="vform" noValidate onSubmit={this.selectImages}>
                                 <input type="file" name="myfile" id="vimg" />
-                                <input type="submit" />
+                                <button className="btn btn-primary" type="submit">Submit</button>
+                                {/* <input type="submit" /> */}
                             </form>                           
                         </div>
 
@@ -227,43 +231,68 @@ class Profile extends Component {
                                     
                                 </tr>
                             </tbody>
-                        </table> */}
-                        <form>
-                            <div>
-                                <label>
-                                    First Name
-                                    <input type="text" name="first_name" value={this.state.first_name} onChange={this.onChange} />
-                                </label>
-                            </div>
-                            <div>
-                                <label>
-                                    Last Name
-                                     <input type="text" name="last_name" value={this.state.last_name} onChange={this.onChange} />
-                                </label>
-                            </div>
-                            <div>
-                                <label>
-                                    Email
-                                     <input type="text" name="email" value={this.state.email} onChange={this.onChange} />
-                                </label>
-                            </div>
-                            {/* <div>
-                                <label>
+                        </table> */}<br/><br/><br/><br/>
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-4">
+                                    <form>
+                                        <div>
+                                            <label>
+                                                <div class="row">
+                                                    <div class="col-6">First Name</div>
+                                                    <div class="col-6">
+                                                        <input type="text" name="first_name" value={this.state.first_name} onChange={this.onChange} />
+                                                    </div>
+                                                
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <div class="row">
+                                                    <div class="col-6">Last Name</div>
+                                                    <div class="col-6">
+                                                        <input type="text" name="last_name" value={this.state.last_name} onChange={this.onChange} />
+                                                    </div>
+                                                
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <div class="row">
+                                                    <div class="col-6">Email</div>
+                                                    <div class="col-6">
+                                                        <input type="text" name="email" value={this.state.email} onChange={this.onChange} />
+                                                    </div>
+                                                
+                                                </div>
+                                                
+                                            </label>
+                                        </div>
+                                        {/* <div>
+                                            <label>
 
-                                    Address
-                                    <input type="text" name="address" value={this.state.address} onChange={this.onChange} />
-                                </label>
-                            </div> */}
-                            <input type="submit" value="Upload" onClick={this.updateprofile} />
+                                                Address
+                                                <input type="text" name="address" value={this.state.address} onChange={this.onChange} />
+                                            </label>
+                                        </div> */}
+                                        {/* <input type="submit" value="Update" onClick={this.updateprofile} /> */}
+                                        <button className="btn btn-primary" type="submit" onClick={this.updateprofile}>Update</button>
 
+                                    </form>
+                                    <p>supplier Images</p>
+                                    {this.showImages()}
 
-                        </form>
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                       
                         <br></br>
 
-                        <p>supplier Images</p>
+                        
                         {/* <img style={{ width: 100, height: 100, borderRadius: 50, alignSelf: 'center' }} src={require("./upload/1565782692157.jpg")} class="rounded-circle" alt="Cinque Terre" />
            */}
-                        {this.showImages()}
                     </div>
                 </div>
                 <Footer />

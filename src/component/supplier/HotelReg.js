@@ -597,4 +597,3 @@ onsubmit2(e){
 
 
 export default HotelReg;
-

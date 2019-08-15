@@ -105,7 +105,7 @@ class Login extends Component{
                         <div className ="col-md-6 mt-5 mx-auto">
                             <form className = "form-container" noValidate onSubmit ={this.onSubmit}> 
                                 
-                                <h1 className ="h3 mb-3 font-weight-normal">SignIn Form</h1>
+                                <h1 className ="h3 mb-3 font-weight-normal">Sign in Form</h1>
                                 <div className ="form-group">
                                     <input type ="email"
                                             className="form-control"
@@ -139,7 +139,7 @@ class Login extends Component{
                                 </button>
                                 <p>Not yet signup?
                                     <button onClick = {this.registertosupplier} type ="submit" className ="btn btn-primary btn--block">
-                                            SignUp
+                                            Sign Up
                                     </button>
                                 </p>
                             </form>

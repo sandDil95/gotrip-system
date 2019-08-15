@@ -12,11 +12,11 @@ var name;
 const multer = require('multer');
 const storage = multer.diskStorage({
     destination: function(req,file,cb){
-        cb(null,'./uploads');
+        cb(null,'D:/gotrip-system/src/component/supplier/Image');
     },
     filename: function(req,file,cb){
-        name = Date.now() +file.originalname;
-        cb(null,name);
+        name = Date.now();
+        cb(null,name + ".jpg");
     }
 });
 
@@ -32,42 +32,48 @@ const upload = multer({
     fileFilter: fileFilter
 });
 
-hotelSearchRoutes.post('/add',upload.single('hotelImage'),(req,res)=>{
-    console.log(req.body.hotelImage);
-        
+hotelSearchRoutes.post('/add',upload.any(),(req,res)=>{
+    //console.log(req.body.hotelImage);
+    console.log("Saving")
+    const hotel = new Hotel(req.body)
+    hotel.save().then(result=>{
+        res.status(201).json({
+            message:"send"
+        })
+    })
        
-            const hotelDetails = new Hotel({
-                sId: req.body.SID,
-                hotelName: req.body.hotelName,
-                contactNo: req.body.contactNo,
-                address: req.body.address,
-                place: req.body.place,
-                hotelType:req.body.hotelType,
-                single_room_num:req.body.single_room_num,
-                single_room_payment:req.body.single_room_payment,
-                double_room_num:req.body.double_room_num,
-                double_room_payment:req.body.double_room_payment,
-                triple_room_num:req.body.triple_room_num,
-                triple_room_payment:req.body.triple_room_payment,
-                quad_room_num:req.body.quad_room_num,
-                quad_room_payment:req.body.quad_room_payment,
-                hotelImage : '',
-                // hotelImage : name,
-                booking : false
-            })
-            hotelDetails.save()
-            .then(doc => {
-                console.log(doc);
-                res.status(201).json({
-                    message: 'Hotel Added' 
-                })
-            })
-            .catch(err => {
-                console.log(err);
-                res.status(500).json({
-                    error:err
-                })
-            });
+            // const hotelDetails = new Hotel({
+            //     sId: req.body.SID,
+            //     hotelName: req.body.hotelName,
+            //     contactNo: req.body.contactNo,
+            //     address: req.body.address,
+            //     place: req.body.place,
+            //     hotelType:req.body.hotelType,
+            //     single_room_num:req.body.single_room_num,
+            //     single_room_payment:req.body.single_room_payment,
+            //     double_room_num:req.body.double_room_num,
+            //     double_room_payment:req.body.double_room_payment,
+            //     triple_room_num:req.body.triple_room_num,
+            //     triple_room_payment:req.body.triple_room_payment,
+            //     quad_room_num:req.body.quad_room_num,
+            //     quad_room_payment:req.body.quad_room_payment,
+            //     hotelImage : '',
+            //     // hotelImage : name,
+            //     booking : false
+            // })
+            // hotelDetails.save()
+            // .then(doc => {
+            //     console.log(doc);
+            //     res.status(201).json({
+            //         message: 'Hotel Added' 
+            //     })
+            // })
+            // .catch(err => {
+            //     console.log(err);
+            //     res.status(500).json({
+            //         error:err
+            //     })
+            // });
         
     
 })

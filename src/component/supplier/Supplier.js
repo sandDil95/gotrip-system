@@ -8,7 +8,7 @@ import About from './About';
 import HotelRegister from './HotelRegister';
 import VehicleRegister from './VehicleRegister';
 import Login from './Login';
-import Notify from './NotifyEndTrip';
+//import Notify from './NotifyEndTrip';
 
 import VehicleReg from './VehicleReg';
 import HotelReg from './HotelReg';
@@ -43,6 +43,7 @@ class Supplier extends Component {
                 <Route path="/supplier/About-Us" exact render={(props) => <About email={this.state.email} {...props} />}/>
                 <Route path="/supplier/Register" exact render={(props) => <Register email={this.state.email} {...props} />} />
                 <Route path="/profile" exact render={(props) => <Profile email={this.state.email} {...props} />} />
+                {/* <Route path="/supplier/Notify" exact render={(props) => <Notify email={this.state.email} {...props} />} /> */}
               </section>
               <Footer/>
             </div>

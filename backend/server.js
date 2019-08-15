@@ -63,7 +63,7 @@ var hotelSearch = require('../backend/routes/HotelSearch');
 var vehicleSearch = require('../backend/routes/VehicleSearch');
 
 var tailorSearch = require('../backend/routes/TailorSearch');
-var NotifyEndTrip = require('../backend/routes/NotifyEndTrip');
+//var NotifyEndTrip = require('../backend/routes/NotifyEndTrip');
 
 // Initialize CORS middleware
 app.use(function(req, res, next) {
