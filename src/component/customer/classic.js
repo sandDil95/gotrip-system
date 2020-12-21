@@ -13,6 +13,11 @@ class classic extends Component {
             
         ]}
         this.handlePage = this.handlePage.bind(this);
+        this.view7=this.view7.bind(this);
+    }
+    view7(e){
+        this.props.history.push('/package_booking')
+
     }
 
     handlePage(){
@@ -101,7 +106,7 @@ class classic extends Component {
                             <li >Breakfast </li><br/>
 						</ul>
                         </p>
-                        <button className="btn btn-warning btn-lg" style={{float:'right'}}>Book now</button>
+                        <button onClick={this.view7} type="submit" className="btn btn-warning btn-lg" style={{float:'right'}}>Book now</button>
                         </div>
 					</div>
 				</div>	

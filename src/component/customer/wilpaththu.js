@@ -13,10 +13,15 @@ class Wilpaththu extends Component {
             
         ]}
         this.handlePage = this.handlePage.bind(this);
+        this.view7=this.view7.bind(this);
     }
 
     handlePage(){
         this.props.history.push('/supplier-login')
+    }
+    view7(e){
+        this.props.history.push('/package_booking')
+
     }
   
     render(){
@@ -96,7 +101,7 @@ class Wilpaththu extends Component {
                             <li> pick up and drop off</li><br/>
 						</ul>
                         </p>
-                        <button className="btn btn-warning btn-lg" style={{float:'right'}}>Book now</button>
+                        <button onClick={this.view7} type="submit" className="btn btn-warning btn-lg" style={{float:'right'}}>Book now</button>
                         </div>
 					</div>
 				</div>	
